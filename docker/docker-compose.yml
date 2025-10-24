@@ -1,0 +1,81 @@
+services:
+  java-server:
+    container_name: java-server
+    image: java-server:latest
+    env_file:
+      - ../environments/.development.env
+    build:
+      context: ..
+      dockerfile: docker/dockerfiles/Development.Server.Dockerfile
+    ports:
+      - "7777:7777"
+      - "9090:9090"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    env_file:
+      - ../environments/.development.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d techpassport_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+
+  pgadmin:
+    image: dpage/pgadmin4:7
+    container_name: pgadmin
+    env_file:
+      - ../environments/.development.env
+    ports:
+      - "8080:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis
+    command: ["redis-server", "--notify-keyspace-events", "Exg"]
+    env_file:
+      - ../environments/.development.env
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+
+networks:
+  app-network:
+    driver: bridge

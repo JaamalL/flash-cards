@@ -1,0 +1,3 @@
+docker/data/
+environments/
+server/src/main/resources/application-development.yml

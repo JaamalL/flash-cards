@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: zhurak-v
+      changes:
+        - sqlFile:
+            path: migrations/create_table_users__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+        - sqlFile:
+            path: migrations/create_table_accounts__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+        - sqlFile:
+            path: migrations/create_table_credentials_accounts__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+        - sqlFile:
+            path: migrations/create_table_google_accounts__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+        - sqlFile:
+            path: migrations/create_table_profiles__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
