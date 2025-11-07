@@ -7,7 +7,7 @@ CREATE TABLE profiles (
     phone VARCHAR(50),
     bio TEXT,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NULL
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
 CREATE INDEX idx_profiles_user_id ON profiles(user_id);

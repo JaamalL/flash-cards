@@ -1,16 +1,15 @@
 server:
   port: ${APPLICATION_PORT:7777}
 
-grpc:
-  server:
-    port: ${GRPC_PORT:9090}
-
 spring:
   application:
     name: application
 
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:development}
+
+  main:
+    allow-bean-definition-overriding: true
 
   jpa:
     hibernate:
@@ -39,7 +38,7 @@ auth:
   tokens:
     max-sessions: 4
     access-token:
-      lifetime: 5m
+      lifetime: 30m
     refresh-token:
       lifetime: 30d
 

@@ -9,7 +9,6 @@ services:
       dockerfile: docker/dockerfiles/Development.Server.Dockerfile
     ports:
       - "7777:7777"
-      - "9090:9090"
     depends_on:
       postgres:
         condition: service_healthy
@@ -19,8 +18,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "2"
-          memory: 2G
+          cpus: "1"
+          memory: 1G
 
   postgres:
     image: postgres:15
@@ -35,7 +34,7 @@ services:
       - app-network
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres -d techpassport_db" ]
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d flashcards-db" ]
       interval: 5s
       timeout: 5s
       retries: 5
