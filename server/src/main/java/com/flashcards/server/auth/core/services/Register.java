@@ -6,11 +6,8 @@ import com.flashcards.server.auth.core.ports.services.IRegister;
 import com.flashcards.server.auth.core.ports.services.IVerificationSender;
 import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.flashcards.server.auth.core.dtos.RegisterDto;
 import com.flashcards.server.auth.core.entities.User;
@@ -22,10 +19,8 @@ import com.flashcards.server.common.utils.hasher.IPasswordHasher;
 import com.flashcards.server.auth.core.values.AuthResult;
 
 @Service
-public class Register implements IRegister {
-
-    private static final Logger logger = LoggerFactory.getLogger(Register.class);
-
+public class Register implements IRegister
+{
     private final IUserRepository userRepository;
     private final IAccountRepository<CredentialsAccount> accountRepository;
     private final IPasswordHasher passwordHasher;
@@ -47,7 +42,6 @@ public class Register implements IRegister {
     }
 
     @Override
-    @Transactional
     public AuthResult registerUserByCredentials(RegisterDto dto) {
         return userRepository.findByEmail(dto.email())
                 .map(existingUser -> handleExistingUser(existingUser, dto))
@@ -77,14 +71,16 @@ public class Register implements IRegister {
     private AuthResult handleNewUser(RegisterDto dto) {
         var createdUser = userRepository.create(new User(dto.email()));
 
-        var profileDto = new CreateProfileDto(createdUser.getId(), null, null, null, null, null);
+        var profileDto = new CreateProfileDto(createdUser.getId(), dto.name(), null, null, null, null);
         profileCreateClient.createProfile(profileDto);
 
         var hashedPassword = passwordHasher.hashPassword(dto.password());
+
         var newAccount = new CredentialsAccount(createdUser.getId(), hashedPassword);
         accountRepository.create(newAccount);
 
         verificationSender.send(createdUser, newAccount);
+
         return new AuthResult(createdUser, newAccount.getId());
     }
 }

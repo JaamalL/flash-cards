@@ -78,6 +78,7 @@ public class VerificationSender implements IVerificationSender
         mailDto.put("subject", String.format("Your verification code is %s", code));
         mailDto.put("content", html);
 
+
         httpClient.postAsync("/mail/send", mailDto);
 
         var verificationCodeKey = redisKeyParser.generateVerificationCodeKey(user.getId());

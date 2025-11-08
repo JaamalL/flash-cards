@@ -7,5 +7,7 @@ public record RegisterDto
     @Email
     String email,
 
+    String name,
+
     String password
 ) {}

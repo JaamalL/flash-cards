@@ -27,7 +27,6 @@ public class ProfileController
         this.profileDetailsHandler = profileDetailsHandler;
     }
 
-    @InternalOnly
     @PostMapping("/create")
     public ResponseEntity<Map<String, String>> create(@RequestBody CreateProfileDto dto) {
         return createProfileHandler.handle(dto);

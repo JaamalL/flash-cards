@@ -14,8 +14,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
-
+public class AuthController
+{
     private final RegisterHandler registerHandler;
     private final LoginHandler loginHandler;
     private final VerifyTokenHandler verifyTokenHandler;
