@@ -21,6 +21,6 @@ public class LogoutHandler {
         logout.deleteSession(refreshToken);
         response.addCookie(cookieFactory.deleteAccessToken());
 
-        return ResponseEntity.ok(Map.of());
+        return ResponseEntity.ok(Map.of("message", "Session has been deleted"));
     }
 }

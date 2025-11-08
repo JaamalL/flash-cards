@@ -17,7 +17,7 @@ public class CookieFactory {
 
     public Cookie refreshToken(String token) {
         var cookie = new Cookie("refreshToken", token);
-        cookie.setPath("/auth");
+        cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setMaxAge((int) refreshTokenLifetime.toSeconds());

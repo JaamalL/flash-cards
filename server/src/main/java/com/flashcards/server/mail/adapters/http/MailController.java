@@ -22,7 +22,7 @@ public class MailController
         this.mailSender = mailSender;
     }
 
-//    @InternalOnly
+    @InternalOnly
     @PostMapping("/send")
     public ResponseEntity<Map<String, String>> sendMail(@RequestBody MailDto dto)
     {

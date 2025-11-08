@@ -1,0 +1,30 @@
+﻿.button {
+  padding: 8px 16px;
+  border-radius: 10px;
+}
+
+.primary {
+  background-color: rgb(136, 59, 249);
+  color: white;
+
+  &:hover {
+    background-color: rgb(123, 47, 232);
+  }
+
+  &:active {
+    background-color: rgb(98, 13, 214);
+  }
+}
+
+.secondary {
+  background-color: #fff;
+  &:hover {
+    background-color: #f1f1f1;;
+  }
+
+  &:active {
+    background-color: #eaeaea;
+  }
+  color: #000;
+  border: 1px solid #c5c5c5;
+}
