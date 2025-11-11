@@ -6,42 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b46cebe7-a26a-4c92-adc6-12ce51445742" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/login/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/register/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/components/header/header-auth-buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/components/header/header-auth-buttons.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/components/header/header-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/components/header/header-panel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/components/header/header-user-info.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/components/header/header-user-info.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/components/header/styles/style.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/components/header/styles/style.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/error/error-types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/error/error-types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/hooks/useLogin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/hooks/useLogin.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/hooks/useLogout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/hooks/useLogout.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/hooks/useRegister.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/hooks/useRegister.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/hooks/useUserProfileAccount.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/hooks/useUserData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/utils/http-client/http-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/utils/http-client/http-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feautured/components/forms/login-from/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feautured/components/forms/login-from/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feautured/components/forms/register-from/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feautured/components/forms/register-from/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/adapters/http/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/adapters/http/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/adapters/http/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/adapters/http/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/adapters/http/handlers/GoogleAuthHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/adapters/http/handlers/GoogleAuthHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/enums/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/services/Google.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/services/Google.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/services/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/services/Register.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/services/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/services/Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/services/UserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/services/UserDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/values/AccessToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/core/values/AccessToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/infrastructure/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/infrastructure/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/infrastructure/services/TokenSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/auth/infrastructure/services/TokenSerializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/common/annotation/Authorize.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/common/annotation/Authorize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/common/annotation/AuthorizeAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/common/annotation/AuthorizeAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/profile/adapters/http/controllers/ProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/flashcards/server/profile/adapters/http/controllers/ProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/resources/db/changelog/migrations/create_table_users__1.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/resources/db/changelog/migrations/create_table_users__1.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +129,7 @@
       <workItem from="1762685255832" duration="7207000" />
       <workItem from="1762767355809" duration="29650000" />
       <workItem from="1762874056838" duration="2100000" />
-      <workItem from="1762882331949" duration="2388000" />
+      <workItem from="1762882331949" duration="5127000" />
     </task>
     <servers />
   </component>
