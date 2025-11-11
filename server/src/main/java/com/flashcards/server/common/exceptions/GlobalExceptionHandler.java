@@ -1,11 +1,14 @@
 package com.flashcards.server.common.exceptions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
@@ -24,15 +27,23 @@ public class GlobalExceptionHandler
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
-        var fieldError = ex.getBindingResult().getFieldError();
-        var message = fieldError != null && fieldError.getDefaultMessage() != null
-                ? fieldError.getDefaultMessage()
-                : "Invalid input";
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+
+        String errorsString;
+        try {
+            errorsString = new ObjectMapper().writeValueAsString(errors);
+        } catch (Exception e) {
+            errorsString = errors.toString();
+        }
+
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Map.of(
                         "code", "VALIDATION_ERROR",
-                        "message", message
+                        "message", errorsString
                 ));
     }
 

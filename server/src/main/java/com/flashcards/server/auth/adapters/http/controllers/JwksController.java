@@ -13,7 +13,8 @@ import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping(value = "/.well-known")
-public class JwksController {
+public class JwksController
+{
     @Value("classpath:.well-known/jwks.json")
     private Resource publicJwkResource;
 

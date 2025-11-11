@@ -3,7 +3,7 @@ package com.flashcards.server.auth.adapters.http.handlers;
 import com.flashcards.server.auth.core.dtos.LoginDto;
 import com.flashcards.server.auth.core.ports.services.ILogin;
 import com.flashcards.server.auth.core.ports.services.ISession;
-import com.flashcards.server.common.utils.http.IHttpClientDetails;
+import com.flashcards.server.common.utils.http.request.IHttpRequestInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import java.util.Map;
 public class LoginHandler {
     private final ILogin login;
     private final ISession session;
-    private final IHttpClientDetails clientInfo;
+    private final IHttpRequestInfo clientInfo;
     private final CookieFactory cookieFactory;
 
-    public LoginHandler(ILogin login, ISession session, IHttpClientDetails clientInfo, CookieFactory cookieFactory) {
+    public LoginHandler(ILogin login, ISession session, IHttpRequestInfo clientInfo, CookieFactory cookieFactory) {
         this.login = login;
         this.session = session;
         this.clientInfo = clientInfo;

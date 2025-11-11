@@ -6,11 +6,13 @@ import com.flashcards.server.auth.core.dtos.VerificationCodeDto;
 import com.flashcards.server.common.annotation.Authorize;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import com.flashcards.server.auth.core.dtos.RegisterDto;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/auth")
@@ -43,12 +45,12 @@ public class AuthController
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDto dto, HttpServletRequest req, HttpServletResponse res) {
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterDto dto, HttpServletRequest req, HttpServletResponse res) {
         return registerHandler.handle(dto, req, res);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto dto, HttpServletRequest req, HttpServletResponse res) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginDto dto, HttpServletRequest req, HttpServletResponse res) {
         return loginHandler.handle(dto, req, res);
     }
 
@@ -58,18 +60,18 @@ public class AuthController
     }
 
     @GetMapping("/verify/token")
-    public ResponseEntity<?> verifyToken(@RequestParam("verifyToken") String token, HttpServletResponse res) {
+    public RedirectView verifyToken(@RequestParam("verifyToken") String token, HttpServletResponse res) {
         return verifyTokenHandler.handle(token, res);
     }
 
     @Authorize(isVerified = false)
     @PostMapping("/verify/code")
-    public ResponseEntity<?> verifyCode(@AuthenticationPrincipal Jwt jwt, @RequestBody VerificationCodeDto dto, HttpServletResponse res) {
+    public ResponseEntity<?> verifyCode(@AuthenticationPrincipal Jwt jwt, @RequestBody @Valid VerificationCodeDto dto, HttpServletResponse res) {
         return verifyCodeHandler.handle(jwt, dto, res);
     }
 
     @GetMapping("/google/callback")
-    public ResponseEntity<?> google(@RequestParam("code") String code, HttpServletRequest req, HttpServletResponse res) {
+    public RedirectView google(@RequestParam("code") String code, HttpServletRequest req, HttpServletResponse res) {
         return googleAuthHandler.handle(code, req, res);
     }
 

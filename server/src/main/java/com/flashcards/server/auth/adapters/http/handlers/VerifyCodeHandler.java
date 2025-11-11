@@ -24,9 +24,10 @@ public class VerifyCodeHandler {
     public ResponseEntity<Map<String, String>> handle(Jwt jwt, VerificationCodeDto dto, HttpServletResponse response) {
         var userId = UUID.fromString(jwt.getSubject());
         var accountId = UUID.fromString(jwt.getClaimAsString("accountId"));
+        var refreshTokenId = UUID.fromString(jwt.getClaimAsString("id"));
 
         var result = verify.verifyUserByCode(userId, accountId, dto.verificationCode());
-        var access = session.refreshSession(result.user().getId(), result.accountId());
+        var access = session.refreshSession(result.user().getId(), result.accountId(), refreshTokenId);
 
         return ResponseEntity.ok(Map.of("accessToken", access));
     }

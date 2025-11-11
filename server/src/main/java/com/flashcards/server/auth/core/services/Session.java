@@ -3,6 +3,7 @@ package com.flashcards.server.auth.core.services;
 import com.flashcards.server.auth.core.entities.Account;
 import com.flashcards.server.auth.core.ports.repository.IAccountRepository;
 import com.flashcards.server.auth.core.values.AuthResult;
+import com.flashcards.server.common.dtos.ClientInfoDto;
 import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
 import jakarta.annotation.PostConstruct;
@@ -14,7 +15,6 @@ import java.time.Duration;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import com.flashcards.server.auth.core.dtos.ClientInfoDto;
 import com.flashcards.server.auth.core.ports.repository.IUserRepository;
 import com.flashcards.server.auth.core.ports.services.ITokenSerializer;
 import com.flashcards.server.auth.core.values.RefreshToken;
@@ -108,14 +108,14 @@ public class Session implements ISession {
     @Override
     public String refreshSession(String refreshToken) {
         var payload = tokenSerializer.DeserializeRefreshToken(refreshToken);
-        return refresh(payload.getSub(), payload.getAccountId());
+        return refresh(payload.getSub(), payload.getAccountId(), payload.getId());
     }
 
-    public String refreshSession(UUID userId, UUID accountId) {
-        return refresh(userId, accountId);
+    public String refreshSession(UUID userId, UUID accountId, UUID refreshTokenId) {
+        return refresh(userId, accountId, refreshTokenId);
     }
 
-    private String refresh(UUID userId, UUID accountId) {
+    private String refresh(UUID userId, UUID accountId, UUID refreshTokenId) {
         var account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ApiException(new ApiError(
                         HttpStatus.NOT_FOUND,
@@ -123,7 +123,7 @@ public class Session implements ISession {
                         "Account not found"
                 )));
 
-        var sessionExists = redisCache.exists(redisKeyParser.generateSessionKey(userId));
+        var sessionExists = redisCache.exists(redisKeyParser.generateRefreshTokenKey(userId, refreshTokenId));
         if (!sessionExists) {
             throw new ApiException(new ApiError(
                     HttpStatus.NOT_FOUND,

@@ -1,6 +1,7 @@
 package com.flashcards.server.auth.core.services;
 
 import com.flashcards.server.auth.core.dtos.LoginDto;
+import com.flashcards.server.auth.core.entities.Account;
 import com.flashcards.server.auth.core.entities.CredentialsAccount;
 import com.flashcards.server.auth.core.entities.User;
 import com.flashcards.server.auth.core.enums.Provider;
@@ -22,15 +23,18 @@ import java.util.stream.Collectors;
 public class Login implements ILogin {
 
     private final IUserRepository userRepository;
-    private final IAccountRepository<CredentialsAccount> accountRepository;
+    private final IAccountRepository<CredentialsAccount> credentialsAccountRepository;
+    private final IAccountRepository<Account> accountRepository;
     private final IPasswordHasher passwordHasher;
 
     public Login(
             IUserRepository userRepository,
-            IAccountRepository<CredentialsAccount> accountRepository,
+            IAccountRepository<CredentialsAccount> credentialsAccountRepository,
+            IAccountRepository<Account> accountRepository,
             IPasswordHasher passwordHasher
     ) {
         this.userRepository = userRepository;
+        this.credentialsAccountRepository = credentialsAccountRepository;
         this.accountRepository = accountRepository;
         this.passwordHasher = passwordHasher;
     }
@@ -55,7 +59,7 @@ public class Login implements ILogin {
     }
 
     private java.util.Optional<CredentialsAccount> getCredentialsAccount(UUID userId) {
-        return accountRepository.findByUserId(userId, Provider.CREDENTIALS);
+        return credentialsAccountRepository.findByUserId(userId, Provider.CREDENTIALS);
     }
 
     private ApiException buildProviderException(UUID userId) {

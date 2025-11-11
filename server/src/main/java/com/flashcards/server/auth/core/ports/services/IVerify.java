@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface IVerify
 {
-    AuthResult verifyUserByToken(String token);
+    void verifyUserByToken(String token);
     AuthResult verifyUserByCode(UUID userId, UUID accountId, String code);
 }

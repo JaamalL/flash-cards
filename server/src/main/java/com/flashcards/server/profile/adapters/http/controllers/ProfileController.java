@@ -5,6 +5,7 @@ import com.flashcards.server.common.annotation.InternalOnly;
 import com.flashcards.server.profile.adapters.http.handlers.CreateProfileHandler;
 import com.flashcards.server.profile.adapters.http.handlers.ProfileDetailsHandler;
 import com.flashcards.server.profile.core.dtos.CreateProfileDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -29,7 +30,7 @@ public class ProfileController
 
     @InternalOnly
     @PostMapping("/create")
-    public ResponseEntity<Map<String, String>> create(@RequestBody CreateProfileDto dto) {
+    public ResponseEntity<Map<String, String>> create(@RequestBody @Valid CreateProfileDto dto) {
         return createProfileHandler.handle(dto);
     }
 

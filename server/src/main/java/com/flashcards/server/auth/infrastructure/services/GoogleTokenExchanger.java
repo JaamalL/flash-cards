@@ -4,16 +4,17 @@ import com.flashcards.server.auth.core.ports.services.IGoogleTokenExchanger;
 import com.flashcards.server.auth.core.values.GooglePayload;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flashcards.server.common.utils.http.IHTTPClient;
+import com.flashcards.server.common.utils.http.client.IHttpClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 import java.util.Map;
 
 @Service
-public class GoogleTokenExchanger implements IGoogleTokenExchanger {
-
+public class GoogleTokenExchanger implements IGoogleTokenExchanger
+{
     @Value("${auth.oauth.google.client-id}")
     private String clientId;
 
@@ -23,10 +24,10 @@ public class GoogleTokenExchanger implements IGoogleTokenExchanger {
     @Value("${auth.oauth.google.redirect-uri}")
     private String redirectUri;
 
-    private final IHTTPClient httpClient;
+    private final IHttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    public GoogleTokenExchanger(IHTTPClient httpClient, ObjectMapper objectMapper) {
+    public GoogleTokenExchanger(IHttpClient httpClient, ObjectMapper objectMapper) {
         this.httpClient = httpClient;
         this.objectMapper = objectMapper;
     }
@@ -49,16 +50,25 @@ public class GoogleTokenExchanger implements IGoogleTokenExchanger {
 
     private Map<String, Object> requestToken(String code) {
         try {
-            String bodyForm = "code=" + code
-                    + "&client_id=" + clientId
-                    + "&client_secret=" + clientSecret
-                    + "&redirect_uri=" + redirectUri
-                    + "&grant_type=authorization_code";
 
-            return httpClient.post(
-                    "https://oauth2.googleapis.com/token",
-                    bodyForm
+            Map<String, Object> bodyMap = Map.of(
+                    "code", code,
+                    "client_id", clientId,
+                    "client_secret", clientSecret,
+                    "redirect_uri", redirectUri,
+                    "grant_type", "authorization_code"
             );
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "application/json");
+
+           return httpClient.post(
+                    "https://oauth2.googleapis.com/token",
+                    bodyMap,
+                    null,
+                    Map.class
+            );
+
         } catch (Exception e) {
             throw new IllegalStateException("Failed to get ID token from Google", e);
         }
@@ -71,6 +81,7 @@ public class GoogleTokenExchanger implements IGoogleTokenExchanger {
         }
         try {
             String payloadJson = new String(Base64.getUrlDecoder().decode(parts[1]));
+
             return objectMapper.readValue(payloadJson, new TypeReference<>() {});
         } catch (Exception e) {
             throw new IllegalStateException("Failed to parse ID token payload", e);

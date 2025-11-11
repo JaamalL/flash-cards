@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.flashcards.server.mail.core.ports.IMailSender;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class MailSender implements IMailSender {
 

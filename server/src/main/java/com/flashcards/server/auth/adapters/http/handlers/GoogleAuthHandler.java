@@ -2,35 +2,38 @@ package com.flashcards.server.auth.adapters.http.handlers;
 
 import com.flashcards.server.auth.core.ports.services.IGoogle;
 import com.flashcards.server.auth.core.ports.services.ISession;
-import com.flashcards.server.common.utils.http.IHttpClientDetails;
+import com.flashcards.server.common.utils.http.request.IHttpRequestInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Component
-public class GoogleAuthHandler {
+public class GoogleAuthHandler
+{
+    @Value("${client.application.url}")
+    private String clientUrl;
+
     private final IGoogle google;
     private final ISession session;
-    private final IHttpClientDetails clientInfo;
+    private final IHttpRequestInfo clientInfo;
     private final CookieFactory cookieFactory;
 
-    public GoogleAuthHandler(IGoogle google, ISession session, IHttpClientDetails clientInfo, CookieFactory cookieFactory) {
+    public GoogleAuthHandler(IGoogle google, ISession session, IHttpRequestInfo clientInfo, CookieFactory cookieFactory) {
         this.google = google;
         this.session = session;
         this.clientInfo = clientInfo;
         this.cookieFactory = cookieFactory;
     }
 
-    public ResponseEntity<Map<String, String>> handle(String code, HttpServletRequest request, HttpServletResponse response) {
+    public RedirectView handle(String code, HttpServletRequest request, HttpServletResponse response) {
         var result = google.googleAuth(code);
         var info = clientInfo.getClientInfo(request);
         var tokens = session.createSession(result, info);
 
         response.addCookie(cookieFactory.refreshToken(tokens.refreshToken()));
 
-        return ResponseEntity.ok(Map.of("accessToken", tokens.accessToken()));
+        return new RedirectView(clientUrl + "/");
     }
 }

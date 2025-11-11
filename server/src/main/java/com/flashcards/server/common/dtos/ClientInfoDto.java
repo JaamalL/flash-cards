@@ -1,4 +1,4 @@
-package com.flashcards.server.auth.core.dtos;
+package com.flashcards.server.common.dtos;
 
 public record ClientInfoDto
 (

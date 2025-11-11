@@ -43,7 +43,7 @@ public class Verify implements IVerify
     }
 
     @Override
-    public AuthResult verifyUserByToken(String token) {
+    public void verifyUserByToken(String token) {
         var payload = tokenSerializer.DeserializeVerifyToken(token);
 
         var user = userRepository.findById(payload.getSub())
@@ -62,8 +62,6 @@ public class Verify implements IVerify
 
         account.MarkVerified();
         accountRepository.update(account.getId(), account);
-
-        return new AuthResult(user, account.getId());
     }
 
     @Override

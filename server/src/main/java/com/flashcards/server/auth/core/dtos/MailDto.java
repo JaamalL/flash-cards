@@ -1,4 +1,4 @@
-package com.flashcards.server.mail.core.dtos;
+package com.flashcards.server.auth.core.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

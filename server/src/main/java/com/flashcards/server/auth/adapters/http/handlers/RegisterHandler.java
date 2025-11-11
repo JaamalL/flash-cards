@@ -3,7 +3,7 @@ package com.flashcards.server.auth.adapters.http.handlers;
 import com.flashcards.server.auth.core.dtos.RegisterDto;
 import com.flashcards.server.auth.core.ports.services.IRegister;
 import com.flashcards.server.auth.core.ports.services.ISession;
-import com.flashcards.server.common.utils.http.IHttpClientDetails;
+import com.flashcards.server.common.utils.http.request.IHttpRequestInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import java.util.Map;
 public class RegisterHandler {
     private final IRegister register;
     private final ISession session;
-    private final IHttpClientDetails clientInfo;
+    private final IHttpRequestInfo clientInfo;
     private final CookieFactory cookieFactory;
 
-    public RegisterHandler(IRegister register, ISession session, IHttpClientDetails clientInfo, CookieFactory cookieFactory) {
+    public RegisterHandler(IRegister register, ISession session, IHttpRequestInfo clientInfo, CookieFactory cookieFactory) {
         this.register = register;
         this.session = session;
         this.clientInfo = clientInfo;

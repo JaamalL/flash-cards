@@ -1,5 +1,6 @@
 package com.flashcards.server.auth.infrastructure.services;
 
+import com.flashcards.server.auth.core.dtos.MailDto;
 import com.flashcards.server.auth.core.entities.Account;
 import com.flashcards.server.auth.core.entities.User;
 import com.flashcards.server.auth.core.ports.services.ITokenSerializer;
@@ -9,14 +10,11 @@ import com.flashcards.server.auth.core.values.VerifyToken;
 import com.flashcards.server.common.data.redis.core.ports.services.IRedisCache;
 import com.flashcards.server.common.utils.generator.ICodeGenerator;
 import com.flashcards.server.common.utils.hasher.IPasswordHasher;
-import com.flashcards.server.common.utils.http.IHTTPClient;
+import com.flashcards.server.common.utils.http.client.IHttpClient;
 import com.flashcards.server.common.utils.redis.IRedisKeyParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class VerificationSender implements IVerificationSender
@@ -42,7 +40,7 @@ public class VerificationSender implements IVerificationSender
     private final IRedisKeyParser redisKeyParser;
     private final IPasswordHasher passwordHasher;
     private final IVerifyEmailHtmlBuilder verifyEmailHtmlBuilder;
-    private final IHTTPClient httpClient;
+    private final IHttpClient httpClient;
 
     public VerificationSender (
             ITokenSerializer tokenSerializer,
@@ -51,7 +49,7 @@ public class VerificationSender implements IVerificationSender
             IRedisKeyParser redisKeyParser,
             IPasswordHasher passwordHasher,
             IVerifyEmailHtmlBuilder verifyEmailHtmlBuilder,
-            IHTTPClient httpClient
+            IHttpClient httpClient
     ) {
         this.tokenSerializer = tokenSerializer;
         this.codeGenerator = codeGenerator;
@@ -63,8 +61,7 @@ public class VerificationSender implements IVerificationSender
     }
 
     @Override
-    public void send(User user, Account account)
-    {
+    public void send(User user, Account account) {
         var verifyTokenPayload = new VerifyToken(user.getId(), account.getId(), verificationTokenLifetime);
         var verificationToken = tokenSerializer.SerializeVerifyToken(verifyTokenPayload);
 
@@ -73,13 +70,13 @@ public class VerificationSender implements IVerificationSender
         var lifetime = String.valueOf(verificationLifetime.toMinutes() + " minutes");
         var html = verifyEmailHtmlBuilder.buildVerifyEmailHtml(code, link, lifetime);
 
-        Map<String, Object> mailDto = new HashMap<>();
-        mailDto.put("to", user.getEmail());
-        mailDto.put("subject", String.format("Your verification code is %s", code));
-        mailDto.put("content", html);
+        var mailDto = new MailDto(user.getEmail(),String.format("Your verification code is %s", code), html);
 
-
-        httpClient.postAsync("/mail/send", mailDto);
+        httpClient.postAsync(
+                String.format("%s/mail/send", baseUrl),
+                mailDto,
+                null
+        );
 
         var verificationCodeKey = redisKeyParser.generateVerificationCodeKey(user.getId());
         var verificationAttemptsKey = redisKeyParser.generateVerificationAttemptsKey(user.getId());
