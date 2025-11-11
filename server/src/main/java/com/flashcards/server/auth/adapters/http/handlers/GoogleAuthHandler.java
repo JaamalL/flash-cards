@@ -33,7 +33,8 @@ public class GoogleAuthHandler
         var tokens = session.createSession(result, info);
 
         response.addCookie(cookieFactory.refreshToken(tokens.refreshToken()));
+        response.addCookie(cookieFactory.accessToken(tokens.accessToken()));
 
-        return new RedirectView(clientUrl + "/");
+        return new RedirectView(clientUrl);
     }
 }

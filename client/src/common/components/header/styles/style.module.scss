@@ -42,8 +42,12 @@
   display: flex;
   align-items: center;
 }
+.header_wrapper_panel_list_auth_button {
+  display: flex;
+  column-gap: 10px;
+}
 .header_wrapper_nav_list_item {
-  margin: 0 8px;
+
 }
 .header_wrapper_panel {
   display: flex;

@@ -70,7 +70,7 @@ public class Session implements ISession {
                 user.getId(),
                 account.getId(),
                 accessTokenLifetime,
-                user.getRole(),
+                user.getRoles(),
                 account.isVerified()
         );
 
@@ -143,7 +143,7 @@ public class Session implements ISession {
                 userId,
                 account.getId(),
                 accessTokenLifetime,
-                user.getRole(),
+                user.getRoles(),
                 account.isVerified()
         );
 

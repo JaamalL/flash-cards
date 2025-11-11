@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserRepository extends BaseRepository<User> implements IUserRepository {
 
-    public UserRepository() {
+    public UserRepository()  {
         super(User.class);
     }
 
@@ -20,7 +20,8 @@ public class UserRepository extends BaseRepository<User> implements IUserReposit
         try {
 
             User entity = em.createQuery(
-                            "SELECT u FROM User u WHERE u.email = :email", type)
+                            "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles LEFT JOIN FETCH u.accounts WHERE u.email = :email",
+                            User.class)
                     .setParameter("email", email)
                     .getSingleResult();
             return Optional.of(entity);

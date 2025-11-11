@@ -1,6 +1,7 @@
 package com.flashcards.server.auth.core.services;
 
 import com.flashcards.server.auth.core.entities.Account;
+import com.flashcards.server.auth.core.entities.Role;
 import com.flashcards.server.auth.core.entities.User;
 import com.flashcards.server.auth.core.ports.repository.IAccountRepository;
 import com.flashcards.server.auth.core.ports.repository.IUserRepository;
@@ -10,9 +11,8 @@ import com.flashcards.server.common.exceptions.ApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserDetails implements IUserDetails
@@ -35,27 +35,51 @@ public class UserDetails implements IUserDetails
                         "User with this id was not found"
                 )));
 
-        var account = accountRepository.findById(accountId)
+        var currentAccount = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ApiException(new ApiError(
                         HttpStatus.NOT_FOUND,
                         "ACCOUNT_NOT_FOUND",
                         "Account with this id was not found"
                 )));
 
-        return buildResult(user, account);
-
+        return buildResult(user, currentAccount);
     }
 
-    private Map<String, Object> buildResult(User user, Account account) {
+    private Map<String, Object> buildResult(User user, Account currentAccount) {
         Map<String, Object> result = new HashMap<>();
+
+        var userMap = buildUserResult(user);
+        var otherAccountsMap = user.getAccounts().stream()
+                .filter(account -> !account.getId().equals(currentAccount.getId()))
+                .map(this::buildAccountResult)
+                .collect(Collectors.toSet());
+
+        var currentAccountMap = buildAccountResult(currentAccount);
+
+        result.put("user", userMap);
+        result.put("currentAccount", currentAccountMap);
+        result.put("otherAccounts", otherAccountsMap);
+
+        return result;
+    }
+
+    private Map<String, Object> buildUserResult(User user) {
+        var roles = user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toSet());
 
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("id", user.getId().toString());
         userMap.put("email", user.getEmail());
-        userMap.put("role", user.getRole().name());
+        userMap.put("roles", roles);
         userMap.put("createdAt", user.getCreatedAt().toString());
         userMap.put("updatedAt", user.getUpdatedAt().toString());
 
+        return userMap;
+    }
+
+    private Map<String, Object> buildAccountResult(Account account)
+    {
         Map<String, Object> accountMap = new HashMap<>();
         accountMap.put("id", account.getId().toString());
         accountMap.put("userId", account.getUserId().toString());
@@ -64,9 +88,6 @@ public class UserDetails implements IUserDetails
         accountMap.put("createdAt", account.getCreatedAt().toString());
         accountMap.put("updatedAt", account.getUpdatedAt().toString());
 
-        result.put("user", userMap);
-        result.put("account", accountMap);
-
-        return result;
+        return accountMap;
     }
 }

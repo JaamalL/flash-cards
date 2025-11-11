@@ -24,6 +24,15 @@ public class CookieFactory {
         return cookie;
     }
 
+    public Cookie accessToken(String token) {
+        var cookie = new Cookie("accessToken", token);
+        cookie.setPath("/");
+        cookie.setHttpOnly(false);
+        cookie.setSecure(true);
+        cookie.setMaxAge((int) accessTokenLifetime.toSeconds());
+        return cookie;
+    }
+
     public Cookie deleteAccessToken() {
         var cookie = new Cookie("accessToken", "");
         cookie.setPath("/");

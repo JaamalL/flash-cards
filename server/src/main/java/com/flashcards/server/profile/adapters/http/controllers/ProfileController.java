@@ -34,7 +34,7 @@ public class ProfileController
         return createProfileHandler.handle(dto);
     }
 
-    @Authorize(isVerified = false)
+    @Authorize(allowUnverified = true)
     @GetMapping("/me")
     public ResponseEntity<Map<String, String>> me(@AuthenticationPrincipal Jwt jwt) {
         return profileDetailsHandler.handle(jwt);

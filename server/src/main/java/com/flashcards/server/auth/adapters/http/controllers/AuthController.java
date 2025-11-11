@@ -64,7 +64,7 @@ public class AuthController
         return verifyTokenHandler.handle(token, res);
     }
 
-    @Authorize(isVerified = false)
+    @Authorize(allowUnverified = true)
     @PostMapping("/verify/code")
     public ResponseEntity<?> verifyCode(@AuthenticationPrincipal Jwt jwt, @RequestBody @Valid VerificationCodeDto dto, HttpServletResponse res) {
         return verifyCodeHandler.handle(jwt, dto, res);
@@ -75,7 +75,7 @@ public class AuthController
         return googleAuthHandler.handle(code, req, res);
     }
 
-    @Authorize(isVerified = false)
+    @Authorize(allowUnverified = true)
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@CookieValue(name = "refreshToken", required = false) String refreshToken, HttpServletResponse res) {
         return logoutHandler.handle(refreshToken, res);

@@ -9,6 +9,11 @@ databaseChangeLog:
             splitStatements: true
             stripComments: true
         - sqlFile:
+            path: migrations/create_table_roles__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+        - sqlFile:
             path: migrations/create_table_accounts__1.sql
             relativeToChangelogFile: true
             splitStatements: true

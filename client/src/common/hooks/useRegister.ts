@@ -1,19 +1,16 @@
 "use client"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addToast } from "@/common/redux-store/toast";
-import { AppDispatch } from "@/common/redux-store";
+import { useRouter } from "next/navigation";
 
 import { httpClient } from "@/common/utils/http-client";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
 
 type RegisterResponse = {
     accessToken: string;
     refreshToken: string;
 }
 
-type RegisterRequest = {
+export type RegisterRequest = {
     name: string;
     email: string;
     password: string;
@@ -25,17 +22,13 @@ async function register(request: RegisterRequest): Promise<RegisterResponse> {
 
 export function useRegister() {
     const queryClient = useQueryClient();
-    const dispatch = useDispatch<AppDispatch>();
     const router = useRouter();
 
     return useMutation({
         mutationFn: register,
         onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ["user-profile-account"] });
+            await queryClient.invalidateQueries({ queryKey: ["user-data"] });
             router.push("/")
-        },
-        onError: (error) => {
-            dispatch(addToast({ message: error.message, type: "error" }));
         }
     })
 

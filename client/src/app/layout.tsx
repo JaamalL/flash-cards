@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import ToastProvider from "@/common/providers/toast-provider";
 import ReduxProvider from "@/common/providers/redux-provider";
 import QueryProvider from "@/common/providers/query-provider";
+import ErrorProvider from "@/common/providers/error-provider";
 
 import Header from "@/common/components/header";
 
@@ -18,8 +19,12 @@ export default function RootLayout({ children } : RootLayoutProps) {
         <ReduxProvider>
             <QueryProvider>
                 <ToastProvider>
-                    <Header />
-                    {children}
+                    <ErrorProvider>
+                        <main className="main">
+                            <Header />
+                            {children}
+                        </main>
+                    </ErrorProvider>
                 </ToastProvider>
             </QueryProvider>
         </ReduxProvider>

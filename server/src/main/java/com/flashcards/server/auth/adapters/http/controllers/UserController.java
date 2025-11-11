@@ -20,7 +20,7 @@ public class UserController
         this.userDetailsHandler = userDetailsHandler;
     }
 
-    @Authorize(isVerified = false)
+    @Authorize(allowUnverified = true)
     @GetMapping("/me")
     public ResponseEntity<?> me(@AuthenticationPrincipal Jwt jwt) {
         return userDetailsHandler.handle(jwt);

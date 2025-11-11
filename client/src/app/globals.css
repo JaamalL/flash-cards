@@ -47,3 +47,10 @@ button {
     outline: none;
     border: none;
 }
+
+.main {
+    width: 100%;
+    padding-top: 79px;
+    display: flex;
+    justify-content: center;
+}

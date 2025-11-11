@@ -1,6 +1,7 @@
 package com.flashcards.server.auth.core.services;
 
 import com.flashcards.server.auth.core.dtos.CreateProfileDto;
+import com.flashcards.server.auth.core.ports.repository.IRoleRepository;
 import com.flashcards.server.auth.core.ports.services.IProfileCreateClient;
 import com.flashcards.server.auth.core.ports.services.IRegister;
 import com.flashcards.server.auth.core.ports.services.IVerificationSender;
@@ -17,11 +18,14 @@ import com.flashcards.server.auth.core.ports.repository.IAccountRepository;
 import com.flashcards.server.auth.core.ports.repository.IUserRepository;
 import com.flashcards.server.common.utils.hasher.IPasswordHasher;
 import com.flashcards.server.auth.core.values.AuthResult;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class Register implements IRegister
 {
     private final IUserRepository userRepository;
+    private final IRoleRepository roleRepository;
     private final IAccountRepository<CredentialsAccount> accountRepository;
     private final IPasswordHasher passwordHasher;
     private final IVerificationSender verificationSender;
@@ -29,12 +33,14 @@ public class Register implements IRegister
 
     public Register(
             IUserRepository userRepository,
+            IRoleRepository roleRepository,
             IAccountRepository<CredentialsAccount> accountRepository,
             IPasswordHasher passwordHasher,
             IVerificationSender verificationSender,
             IProfileCreateClient profileCreateClient
     ) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.accountRepository = accountRepository;
         this.passwordHasher = passwordHasher;
         this.verificationSender = verificationSender;
@@ -69,7 +75,13 @@ public class Register implements IRegister
     }
 
     private AuthResult handleNewUser(RegisterDto dto) {
-        var createdUser = userRepository.create(new User(dto.email()));
+        var role = roleRepository.findByName("USER").orElseThrow(() -> new ApiException(
+                new ApiError(HttpStatus.NOT_FOUND, "ROLE_NOT_FOUND", "role USER not found")));
+        
+        var user = new User(dto.email());
+        user.addRole(role);
+
+        var createdUser = userRepository.create(user);
 
         var profileDto = new CreateProfileDto(createdUser.getId(), dto.name(), null, null, null, null);
         profileCreateClient.createProfile(profileDto);

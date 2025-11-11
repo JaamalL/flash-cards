@@ -6,6 +6,6 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 public @interface Authorize
 {
-    String[] roles() default {};
-    boolean isVerified() default true;
+    String[] roles() default {"USER"};
+    boolean allowUnverified() default false;
 }

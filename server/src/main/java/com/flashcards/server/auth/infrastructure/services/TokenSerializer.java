@@ -1,6 +1,6 @@
 package com.flashcards.server.auth.infrastructure.services;
 
-import com.flashcards.server.auth.core.enums.Role;
+import com.flashcards.server.auth.core.entities.Role;
 import com.flashcards.server.auth.core.values.AccessToken;
 import com.flashcards.server.auth.core.values.RefreshToken;
 import com.flashcards.server.auth.core.values.VerifyToken;
@@ -13,8 +13,11 @@ import org.springframework.security.oauth2.jwt.*;
 import com.flashcards.server.auth.core.ports.services.ITokenSerializer;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TokenSerializer implements ITokenSerializer
@@ -46,6 +49,10 @@ public class TokenSerializer implements ITokenSerializer
         var issuedAt = Instant.ofEpochSecond(token.getIat());
         var expiresAt = Instant.ofEpochSecond(token.getExp());
 
+        var roleNames = token.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toSet());
+
         var claims = JwtClaimsSet.builder()
                 .issuer(issuer)
                 .audience(List.of(audience))
@@ -53,7 +60,7 @@ public class TokenSerializer implements ITokenSerializer
                 .issuedAt(issuedAt)
                 .expiresAt(expiresAt)
                 .claim("accountId", token.getAccountId().toString())
-                .claim("role", token.getRole().name())
+                .claim("roles", roleNames)
                 .claim("isVerified", token.isVerified())
                 .build();
 
@@ -66,12 +73,19 @@ public class TokenSerializer implements ITokenSerializer
 
         var sub = UUID.fromString(jwt.getSubject());
         var accountId = UUID.fromString(jwt.getClaim("accountId").toString());
-        var role = jwt.getClaim("role").toString();
+
+        @SuppressWarnings("unchecked")
+        var roleStrings = (Set<String>) jwt.getClaim("roles");
+
+        var roles = roleStrings.stream()
+                .map(Role::new)
+                .collect(Collectors.toSet());
+
         var isVerified = Boolean.parseBoolean(jwt.getClaim("isVerified").toString());
         long iat = jwt.getIssuedAt().getEpochSecond();
         long exp = jwt.getExpiresAt().getEpochSecond();
 
-        return new AccessToken(sub, accountId, Role.valueOf(role), isVerified, iat, exp);
+        return new AccessToken(sub, accountId, roles, isVerified, iat, exp);
     }
 
     @Override

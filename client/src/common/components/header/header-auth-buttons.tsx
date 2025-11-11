@@ -4,7 +4,7 @@ import s from "@/common/components/header/styles/style.module.scss";
 import Link from "next/link";
 
 export const HeaderAuthButtons = () => (
-    <>
+    <div className={s.header_wrapper_panel_list_auth_button}>
         <li className={s.header_wrapper_panel_list_item}>
             <Link href={"/auth/register"}>
                 <Button variant="secondary">
@@ -23,5 +23,5 @@ export const HeaderAuthButtons = () => (
                 </Button>
             </Link>
         </li>
-    </>
+    </div>
 );

@@ -1,55 +1,50 @@
 ﻿"use client";
 
-import React, {FC, FormEvent, useState} from "react";
-import s from "@/feautured/components/forms/login-from/styles/style.module.scss";
+import { useForm } from "@tanstack/react-form";
 
 import { useLogin } from "@/common/hooks/useLogin";
+import { AuthFormWrapper } from "@/common/components/form/AuthForm";
+import { FormField } from "@/common/components/form/FormField";
 
-const LoginForm: FC = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+export const LoginForm = () => {
     const { mutateAsync: login, isPending } = useLogin();
 
-    async function handleSubmit(e: FormEvent) {
-        e.preventDefault();
-        try {
-            await login({ email, password });
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {}
-    }
+    const form = useForm({
+        defaultValues: { email: "", password: "" },
+        onSubmit: async ({ value }) => await login(value),
+    });
 
     return (
-        <div className={s.form_wrapper}>
-            <div className={s.register_form}>
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Email:
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </label>
+        <AuthFormWrapper
+            title="Login to Start Learning"
+            isPending={isPending}
+            submitText="Login"
+            onSubmit={async (e) => {
+                e.preventDefault();
+                await form.handleSubmit();
+            }}
+        >
+            <form.Field
+                name="email"
+                validators={{
+                    onChange: ({ value }) => {
+                        if (!value.trim()) return "Email is required";
+                        if (!/\S+@\S+\.\S+/.test(value)) return "Invalid email";
+                    },
+                }}
+            >
+                {(field) => <FormField field={field} label="Email" type="email" />}
+            </form.Field>
 
-                    <label>
-                        Password:
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </label>
-
-                    <button type="submit" disabled={isPending}>
-                        {isPending ? "Loading..." : "Submit"}
-                    </button>
-                </form>
-            </div>
-        </div>
+            <form.Field
+                name="password"
+                validators={{
+                    onChange: ({ value }) =>
+                        value.length < 6 ? "Password must be at least 6 characters" : undefined,
+                }}
+            >
+                {(field) => <FormField field={field} label="Password" type="password" />}
+            </form.Field>
+        </AuthFormWrapper>
     );
 };
-
-export default LoginForm;

@@ -3,28 +3,25 @@ import defaultProfileAvatar from "#/default-profile-avatar.svg";
 
 import Typography from "@/common/components/typography";
 import s from "@/common/components/header/styles/style.module.scss";
-import {FullUserProfileResponse} from "@/common/hooks/useUserProfileAccount";
+import type { UserDataResponse } from "@/common/hooks/useUserData";
 import Button from "@/common/components/button";
-import {useLogout} from "@/common/hooks/useLogout";
-import {FormEvent} from "react";
+import { useLogout } from "@/common/hooks/useLogout";
+import { FormEvent } from "react";
 
 type Props = {
-    data: FullUserProfileResponse;
+    data: UserDataResponse;
 };
 
 export const HeaderUserInfo = (props: Props) => {
-    const {mutateAsync: logout, isPending} = useLogout();
+    const { mutateAsync: logout, isPending } = useLogout();
     async function handleLogout(e: FormEvent) {
         e.preventDefault();
-        try {
-            await logout();
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {}
+        await logout();
     }
 
     return (
         <div className={s.header_wrapper_panel_list_user_info}>
-            <Image className={s.header_wrapper_panel_list_user_info_image} src={props.data.profile.avatar || defaultProfileAvatar} alt={"avatar"}></Image>
+            <Image className={s.header_wrapper_panel_list_user_info_image} width={50} height={50} src={props.data.profile.avatar || defaultProfileAvatar} alt={"avatar"}></Image>
             <Typography className={s.header_wrapper_panel_list_user_info_name} tag="span">
                 {props.data.profile.firstName}
             </Typography>
