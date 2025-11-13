@@ -1,4 +1,12 @@
 package com.flashcards.server.flashcards.core.ports.repository;
 
-public interface FlashcardRepositoryPort {
+import com.flashcards.server.common.data.repository.IBaseRepository;
+import com.flashcards.server.flashcards.core.entities.Flashcard;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+public interface FlashcardRepositoryPort extends IBaseRepository<Flashcard> {
+    List<Flashcard> findByUserId(UUID userId);
 }
