@@ -1,4 +1,4 @@
 package com.flashcards.server.flashcards.adapters.http.controllers;
 
-public class FlashCardController {
+public class FlashcardController {
 }
