@@ -1,36 +1,42 @@
 package com.flashcards.server.mail.infrastructure.configurations;
 
+import io.vertx.core.Vertx;
+import io.vertx.ext.mail.LoginOption;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailConfig;
+import io.vertx.ext.mail.StartTLSOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
 public class MailConfiguration {
 
     @Bean
-    public JavaMailSender javaMailSender(
+    public Vertx vertx() {
+        return Vertx.vertx();
+    }
+
+    @Bean
+    public MailClient mailClient(
+            Vertx vertx,
             @Value("${spring.mail.host}") String host,
             @Value("${spring.mail.port}") int port,
             @Value("${spring.mail.username}") String username,
             @Value("${spring.mail.password}") String password,
-            @Value("${spring.mail.properties.mail.smtp.auth}") boolean auth,
-            @Value("${spring.mail.properties.mail.smtp.starttls.enable}") boolean starttls,
-            @Value("${spring.mail.properties.mail.smtp.starttls.required}") boolean required
+            @Value("${spring.mail.properties.mail.smtp.starttls.enable:true}") boolean starttls,
+            @Value("${spring.mail.properties.mail.smtp.auth:true}") boolean auth
     ) {
-        var mailSender = new JavaMailSenderImpl();
+        MailConfig config = new MailConfig();
+        config.setHostname(host);
+        config.setPort(port);
+        config.setUsername(username);
+        config.setPassword(password);
+        config.setStarttls(starttls ? StartTLSOptions.REQUIRED : StartTLSOptions.DISABLED);
+        config.setLogin(auth ? LoginOption.REQUIRED : LoginOption.NONE);
+        config.setKeepAlive(true);
+        config.setMaxPoolSize(10);
 
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(username);
-        mailSender.setPassword(password);
-
-        var props = mailSender.getJavaMailProperties();
-        props.put("mail.smtp.auth", auth);
-        props.put("mail.smtp.starttls.enable", starttls);
-        props.put("mail.smtp.starttls.required", required);
-
-        return mailSender;
+        return MailClient.createShared(vertx, config, "flashcards-mail-client");
     }
 }

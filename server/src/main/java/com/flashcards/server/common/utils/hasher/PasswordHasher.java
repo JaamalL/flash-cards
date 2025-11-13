@@ -1,34 +1,25 @@
 package com.flashcards.server.common.utils.hasher;
 
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PasswordHasher implements IPasswordHasher
-{
-    private static final int ITERATIONS = 1;
-    private static final int MEMORY = 1024;
-    private static final int PARALLELISM = 1;
+public class PasswordHasher implements IPasswordHasher {
 
-    private final Argon2 argon2 = Argon2Factory.create();
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public String hashPassword(String password)
-    {
-        try
-        {
-            return argon2.hash(ITERATIONS, MEMORY, PARALLELISM, password.toCharArray());
-        }
-        finally
-        {
-            argon2.wipeArray(password.toCharArray());
-        }
+    public PasswordHasher() {
+        this.passwordEncoder = new BCryptPasswordEncoder(10);
     }
 
     @Override
-    public boolean verifyPassword(String hash, String password)
-    {
-        return argon2.verify(hash, password.toCharArray());
+    public String hashPassword(String password) {
+        return passwordEncoder.encode(password);
+    }
+
+    @Override
+    public boolean verifyPassword(String hash, String password) {
+        return passwordEncoder.matches(password, hash);
     }
 }

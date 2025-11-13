@@ -21,7 +21,6 @@ import com.flashcards.server.auth.core.values.AuthResult;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class Register implements IRegister
 {
     private final IUserRepository userRepository;

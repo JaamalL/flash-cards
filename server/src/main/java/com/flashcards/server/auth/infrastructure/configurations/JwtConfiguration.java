@@ -16,10 +16,10 @@ import java.nio.charset.StandardCharsets;
 
 
 @Configuration
-public class JwtConfiguration {
-
-    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
-    private String jwkSetUri;
+public class JwtConfiguration
+{
+    @Value("classpath:keys/pkcs8_public.json")
+    private Resource publicJwkResource;
 
     @Value("classpath:keys/pkcs8_private.json")
     private Resource privateJwkResource;
@@ -34,9 +34,11 @@ public class JwtConfiguration {
     }
 
     @Bean
-    public JwtDecoder jwtDecoder() {
-        System.out.println(jwkSetUri);
-
-        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
+    public JwtDecoder jwtDecoder() throws Exception {
+        var jwkJson = new String(publicJwkResource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+        var jwkSet = JWKSet.parse(jwkJson);
+        var jwk = jwkSet.getKeys().getFirst();
+        var publicKey = jwk.toRSAKey().toRSAPublicKey();
+        return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
 }

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
+import com.flashcards.server.mail.adapters.http.MailController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +19,9 @@ import java.io.IOException;
 import java.util.Map;
 
 @Service
-public class HttpClient implements IHttpClient {
+public class HttpClient implements IHttpClient
+{
+    private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
 
     @Value("${auth.internal.internal-secret}")
     private String internalSecret;
@@ -73,9 +78,9 @@ public class HttpClient implements IHttpClient {
                 .body(responseType);
     }
 
-    @Async
     @Override
     public <B> void postAsync(String endpoint, B body, HttpHeaders headers) {
+        log.info(Thread.currentThread().toString());
         restClient.post()
                 .uri(endpoint)
                 .headers(h -> h.addAll(prepareHeaders(headers)))

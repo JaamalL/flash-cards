@@ -15,10 +15,10 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping(value = "/.well-known")
 public class JwksController
 {
-    @Value("classpath:.well-known/jwks.json")
+    @Value("classpath:keys/pkcs8_public.json")
     private Resource publicJwkResource;
 
-    @GetMapping(value = "jwks.json", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/pkcs8_public.json", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getJwksJson() {
         try (var is = publicJwkResource.getInputStream()) {
             return new String(is.readAllBytes(), StandardCharsets.UTF_8);

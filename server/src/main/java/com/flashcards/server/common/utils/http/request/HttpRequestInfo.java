@@ -1,23 +1,21 @@
 package com.flashcards.server.common.utils.http.request;
 
 import com.flashcards.server.common.dtos.ClientInfoDto;
-import nl.basjes.parse.useragent.UserAgent;
-import nl.basjes.parse.useragent.UserAgentAnalyzer;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
+import ua_parser.Client;
+import ua_parser.Parser;
+
+import java.io.IOException;
 
 @Service
 public class HttpRequestInfo implements IHttpRequestInfo {
 
-    private final UserAgentAnalyzer userAgentAnalyzer;
+    private final Parser uaParser;
 
-    public HttpRequestInfo() {
-        this.userAgentAnalyzer = UserAgentAnalyzer
-                .newBuilder()
-                .withField("OperatingSystemNameVersion")
-                .withField("AgentNameVersion")
-                .withField("DeviceClass")
-                .build();
+    public HttpRequestInfo() throws IOException {
+        // Створюємо Parser. За замовчуванням підвантажує regexes.yaml з ресурсів
+        this.uaParser = new Parser();
     }
 
     @Override
@@ -25,11 +23,12 @@ public class HttpRequestInfo implements IHttpRequestInfo {
         var ip = extractClientIp(request);
         var userAgentHeader = request.getHeader("User-Agent");
 
-        UserAgent agent = userAgentAnalyzer.parse(userAgentHeader);
+        Client client = uaParser.parse(userAgentHeader != null ? userAgentHeader : "");
 
-        var os = agent.getValue("OperatingSystemNameVersion");
-        var browser = agent.getValue("AgentNameVersion");
-        var device = agent.getValue("DeviceClass");
+        String os = client.os.family + (client.os.major != null ? " " + client.os.major : "");
+        String browser = client.userAgent.family +
+                (client.userAgent.major != null ? " " + client.userAgent.major : "");
+        String device = client.device.family;
 
         return new ClientInfoDto(os, device, ip, browser);
     }
