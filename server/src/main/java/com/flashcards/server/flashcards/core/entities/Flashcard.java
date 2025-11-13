@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "flash_cards")
-public class FlashCard extends Base {
+public class Flashcard extends Base {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
@@ -22,10 +22,10 @@ public class FlashCard extends Base {
     @Column(name = "answer")
     private String answer;
 
-    protected FlashCard() {
+    protected Flashcard() {
     }
 
-    public FlashCard(
+    public Flashcard(
             final UUID userId,
             String textQuestion,
             String urlQuestion,
