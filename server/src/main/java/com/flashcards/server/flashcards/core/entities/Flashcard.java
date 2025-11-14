@@ -3,12 +3,19 @@ package com.flashcards.server.flashcards.core.entities;
 import com.flashcards.server.common.entities.Base;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 
 import java.util.UUID;
 
 @Entity
-@Table(name = "flash_cards")
+@Table(
+        name = "flashcards",
+        indexes =
+        {
+                @Index(name = "idx_flashcards_user_id", columnList = "user_id")
+        }
+)
 public class Flashcard extends Base {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
