@@ -4,11 +4,13 @@ import com.flashcards.server.common.data.repository.BaseRepository;
 import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.ports.repository.FlashcardRepositoryPort;
 import jakarta.persistence.NoResultException;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public class FlashcardRepository extends BaseRepository<Flashcard> implements FlashcardRepositoryPort {
     public FlashcardRepository() {
         super(Flashcard.class);
