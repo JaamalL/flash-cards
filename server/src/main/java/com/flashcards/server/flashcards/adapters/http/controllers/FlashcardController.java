@@ -1,5 +1,6 @@
 package com.flashcards.server.flashcards.adapters.http.controllers;
 
+import com.flashcards.server.common.annotation.Authorize;
 import com.flashcards.server.flashcards.adapters.http.handlers.CreateFlashcardHandler;
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
 import jakarta.validation.Valid;
@@ -20,6 +21,7 @@ public class FlashcardController {
         this.createFlashcardHandler = createFlashcardHandler;
     }
 
+    @Authorize
     @PostMapping("/create")
     public ResponseEntity<Map<String, String>> create(@RequestBody @Valid CreateFlashcardDTO createFlashcardDTO) {
         return createFlashcardHandler.handle(createFlashcardDTO);
