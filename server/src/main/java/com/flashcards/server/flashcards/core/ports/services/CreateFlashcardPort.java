@@ -1,8 +1,9 @@
 package com.flashcards.server.flashcards.core.ports.services;
 
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
-import com.flashcards.server.flashcards.core.entities.Flashcard;
+
+import java.util.Map;
 
 public interface CreateFlashcardPort {
-    Flashcard createFlashcard(CreateFlashcardDTO createFlashcardDTO);
+    Map<String, String> createFlashcard(CreateFlashcardDTO createFlashcardDTO);
 }
