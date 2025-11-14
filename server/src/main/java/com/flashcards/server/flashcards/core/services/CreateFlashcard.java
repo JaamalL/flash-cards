@@ -11,8 +11,7 @@ import java.util.Map;
 
 @Service
 public class CreateFlashcard implements CreateFlashcardPort {
-    private FlashcardRepositoryPort flashcardRepository;
-    private Flashcard entity;
+    private final FlashcardRepositoryPort flashcardRepository;
 
     public CreateFlashcard(FlashcardRepositoryPort flashcardRepository) {
         this.flashcardRepository = flashcardRepository;
