@@ -46,9 +46,4 @@ public class AuthDatabaseConfiguration {
     public JpaTransactionManager authTransactionManager() {
         return new JpaTransactionManager(authManagerFactory().getObject());
     }
-
-    @Bean
-    public EntityManager authEntityManager(@Qualifier("authManagerFactory") LocalContainerEntityManagerFactoryBean factory) {
-        return factory.getObject().createEntityManager();
-    }
 }

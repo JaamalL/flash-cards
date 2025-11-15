@@ -1,12 +1,9 @@
 package com.flashcards.server.profile.infrastructure.configurations;
 
-import jakarta.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -46,11 +43,5 @@ public class ProfileDatabaseConfiguration {
     @Bean
     public JpaTransactionManager profileTransactionManager() {
         return new JpaTransactionManager(profileManagerFactory().getObject());
-    }
-
-    @Primary
-    @Bean
-    public EntityManager profileEntityManager(@Qualifier("profileManagerFactory") LocalContainerEntityManagerFactoryBean factory) {
-        return factory.getObject().createEntityManager();
     }
 }

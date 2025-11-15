@@ -19,7 +19,7 @@ services:
       resources:
         limits:
           cpus: "2"
-          memory: 2G
+          memory: 4G
 
   postgres:
     image: postgres:15
@@ -78,3 +78,10 @@ services:
 networks:
   app-network:
     driver: bridge
+
+
+
+#docker exec -it postgres psql -U postgres
+#
+#CREATE DATABASE auth_db;
+#CREATE DATABASE profile_db;

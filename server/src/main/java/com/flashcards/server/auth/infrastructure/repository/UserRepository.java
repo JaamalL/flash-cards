@@ -1,7 +1,7 @@
 package com.flashcards.server.auth.infrastructure.repository;
 
 import com.flashcards.server.common.repository.BaseRepository;
-import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import java.util.Optional;
 
@@ -11,16 +11,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepository extends BaseRepository<User> implements IUserRepository
-{
-    public UserRepository(@Qualifier("authEntityManager") EntityManager authEntityManager) {
-        super(User.class, authEntityManager);
+public class UserRepository extends BaseRepository<User> implements IUserRepository {
+
+    public UserRepository(@Qualifier("authManagerFactory") EntityManagerFactory emf) {
+        super(User.class, emf);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try {
-
+        try (var em = emf.createEntityManager()) {
             User entity = em.createQuery(
                             "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles LEFT JOIN FETCH u.accounts WHERE u.email = :email",
                             User.class)

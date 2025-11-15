@@ -1,5 +1,12 @@
 server:
   port: ${APPLICATION_PORT:7777}
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.transaction: DEBUG
+    com.flashcards: DEBUG
 
 spring:
   application:
@@ -19,8 +26,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        generate_statistics: true
 
-    show-sql: false
+    show-sql: true
 
   threads:
     virtual:
@@ -29,8 +37,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 25
-      minimum-idle: 5
+      maximum-pool-size: 50
+      minimum-idle: 10
       idle-timeout: 30000
       max-lifetime: 1800000
       connection-timeout: 15000

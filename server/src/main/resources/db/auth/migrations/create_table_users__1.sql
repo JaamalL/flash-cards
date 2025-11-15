@@ -5,5 +5,3 @@ CREATE TABLE users
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
-CREATE INDEX idx_users_email ON users(email);

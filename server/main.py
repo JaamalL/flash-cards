@@ -1,74 +1,34 @@
-# import requests
-# from concurrent.futures import ThreadPoolExecutor, as_completed
-# import time
-#
-# url = "http://localhost:7777/auth/login"
-# TOTAL = 200
-# BATCH_SIZE = 20
-# BATCH_DELAY = 1  # ⏱️ затримка між батчами в секундах
-#
-# def send_request(i):
-#     data = {
-#         "email": f"zhurakw-{i}@gmail.com",
-#         "password": "111"
-#     }
-#     try:
-#         response = requests.post(url, json=data, timeout=5)
-#         return i, response.status_code, response.text
-#     except requests.exceptions.RequestException as e:
-#         return i, None, str(e)
-#
-# for start in range(0, TOTAL, BATCH_SIZE):
-#     end = min(start + BATCH_SIZE, TOTAL)
-#     print(f"\n🚀 Надсилаємо батч {start+1}-{end}")
-#
-#     with ThreadPoolExecutor(max_workers=BATCH_SIZE) as executor:
-#         futures = [executor.submit(send_request, i) for i in range(start, end)]
-#
-#         for future in as_completed(futures):
-#             i, status, result = future.result()
-#             print(f"[{i+1}] Status: {status}, Result: {result}")
-#
-#     if end < TOTAL:
-#         print(f"⏳ Очікуємо {BATCH_DELAY} сек перед наступним батчем...\n")
-#         time.sleep(BATCH_DELAY)
-
-
 import requests
-from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 url = "http://localhost:7777/auth/register"
-TOTAL = 200
-BATCH_SIZE = 20
-BATCH_DELAY = 1  # затримка між батчами в секундах
 
 def send_request(i):
     data = {
         "name": "Volodymyr",
-        "email": f"zhurakw-{i}@gmail.com",
+        "email": f"zhurakwrewfgv-{i}@gmail.com",
         "password": "111"
     }
-    start_time = time.perf_counter()
+    start = time.perf_counter()
     try:
-        response = requests.post(url, json=data, timeout=5)
-        elapsed = time.perf_counter() - start_time
-        return i, response.status_code, response.text, elapsed
-    except requests.exceptions.RequestException as e:
-        elapsed = time.perf_counter() - start_time
-        return i, None, str(e), elapsed
+        r = requests.post(url, json=data, timeout=10)
+        print(f"[{i}] Status: {r.status_code}, Time: {time.perf_counter()-start:.3f}s")
+    except requests.RequestException as e:
+        print(f"[{i}] Error: {e}, Time: {time.perf_counter()-start:.3f}s")
+    time.sleep(0.2)
 
-for start in range(0, TOTAL, BATCH_SIZE):
-    end = min(start + BATCH_SIZE, TOTAL)
-    print(f"\n🚀 Надсилаємо батч {start+1}-{end}")
+TOTAL_BATCHES = 50
+BATCH_SIZE = 5
+
+for batch_num in range(TOTAL_BATCHES):
+    print(f"\n🚀 Надсилаємо батч {batch_num + 1}/{TOTAL_BATCHES}")
+    start_index = batch_num * BATCH_SIZE
+    end_index = start_index + BATCH_SIZE
 
     with ThreadPoolExecutor(max_workers=BATCH_SIZE) as executor:
-        futures = [executor.submit(send_request, i) for i in range(start, end)]
+        futures = [executor.submit(send_request, i) for i in range(start_index, end_index)]
+        for f in as_completed(futures):
+            pass  # усі результати вже друкуються в send_request
 
-        for future in as_completed(futures):
-            i, status, result, elapsed = future.result()
-            print(f"[{i+1}] Status: {status}, Time: {elapsed:.3f}s, Result: {result}")
-
-    if end < TOTAL:
-        print(f"⏳ Очікуємо {BATCH_DELAY} сек перед наступним батчем...\n")
-        time.sleep(BATCH_DELAY)
+    time.sleep(0.2)

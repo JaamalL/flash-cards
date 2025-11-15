@@ -28,13 +28,13 @@ COPY --from=builder /app/target/*.jar application.jar
 EXPOSE 7777
 
 ENV JAVA_OPTS="\
--Xms2g \
--Xmx2g \
+-Xms3g \
+-Xmx3g \
 -XX:+UseG1GC \
 -XX:MaxGCPauseMillis=50 \
 -XX:G1HeapRegionSize=4m \
 -XX:ParallelGCThreads=2 \
--XX:ConcGCThreads=1 \
+-XX:ConcGCThreads=2 \
 -XX:InitiatingHeapOccupancyPercent=20 \
 -XX:G1ReservePercent=10 \
 -XX:+AlwaysPreTouch \
@@ -47,10 +47,9 @@ ENV JAVA_OPTS="\
 -XX:+PerfDisableSharedMem \
 -XX:+HeapDumpOnOutOfMemoryError \
 -XX:HeapDumpPath=/tmp/heapdump.hprof \
--Djdk.virtualThreadScheduler.parallelism=8 \
+-Djdk.virtualThreadScheduler.parallelism=16 \
+-Djdk.virtualThreadScheduler.minRunnable=32 \
 -Djdk.virtualThreadScheduler.maxPoolSize=256 \
--Djdk.virtualThreadScheduler.minRunnable=8 \
--Djdk.tracePinnedThreads=short \
-"
+-Djdk.tracePinnedThreads=short"
 
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar application.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
