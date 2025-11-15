@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class CreateFlashcard implements CreateFlashcardPort {
@@ -18,9 +19,9 @@ public class CreateFlashcard implements CreateFlashcardPort {
     }
 
     @Override
-    public Map<String, String> createFlashcard(CreateFlashcardDTO createFlashcardDTO) {
+    public Map<String, String> createFlashcard(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
         Flashcard entity = new Flashcard(
-                createFlashcardDTO.userId(),
+                userId,
                 createFlashcardDTO.textQuestion(),
                 createFlashcardDTO.urlQuestion(),
                 createFlashcardDTO.answer()
