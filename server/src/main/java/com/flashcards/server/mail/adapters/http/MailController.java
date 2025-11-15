@@ -32,7 +32,12 @@ public class MailController
     @PostMapping("/send")
     public ResponseEntity<Map<String, String>> sendMail(@RequestBody @Valid MailDto dto)
     {
-        mailService.sendMail(dto.to(), dto.subject(), dto.content());
-        return ResponseEntity.ok(Map.of("message", "letter was sent successful"));
+        try {
+            mailService.sendMail(dto.to(), dto.subject(), dto.content());
+            return ResponseEntity.ok(Map.of("message", "letter was sent successful"));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return null;
     }
 }

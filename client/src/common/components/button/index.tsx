@@ -1,19 +1,16 @@
-﻿import React from "react";
+﻿import styles from "@/common/components/button/button-styles.module.scss";
 
-import s from "@/common/components/button/styles/style.module.scss";
+import { ReactNode, FC, ButtonHTMLAttributes } from "react";
 
-type ButtonTypes = "primary" | "secondary";
-
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    children?: React.ReactNode;
+type ButtonTypes = "filled" | "outlined" | "disabled";
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+    children: ReactNode;
     variant?: ButtonTypes;
 };
-const Button: React.FC<ButtonProps> = ({ children, variant = "primary", ...props }) => {
+export const Button: FC<ButtonProps> = ({ children, variant = "filled", ...props }) => {
     return (
-        <button {...props} className={`${s.button} ${s[variant]} ${props.className || ""}`}>
-            { children }
+        <button {...props} className={`${styles.button} ${styles[variant]} ${props.className || ""}`}>
+            {children}
         </button>
     );
 }
-
-export default Button

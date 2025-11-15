@@ -31,10 +31,10 @@ public class LoginHandler {
         var tokens = session.createSession(user, info);
 
         response.addCookie(cookieFactory.refreshToken(tokens.refreshToken()));
+        response.addCookie(cookieFactory.accessToken(tokens.accessToken()));
 
         return ResponseEntity.ok(Map.of(
-                "accessToken", tokens.accessToken(),
-                "refreshToken", tokens.refreshToken()
+                "accessToken", tokens.accessToken()
         ));
     }
 }

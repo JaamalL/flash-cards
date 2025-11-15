@@ -14,7 +14,6 @@ public class HttpRequestInfo implements IHttpRequestInfo {
     private final Parser uaParser;
 
     public HttpRequestInfo() throws IOException {
-        // Створюємо Parser. За замовчуванням підвантажує regexes.yaml з ресурсів
         this.uaParser = new Parser();
     }
 

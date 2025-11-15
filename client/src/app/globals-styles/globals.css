@@ -1,0 +1,11 @@
+@import "reset-agent-styles.css";
+@import "variables-common.css";
+@import "variables-light-theme.css";
+
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    padding-top: var(--spacing-xxxl);
+}

@@ -7,7 +7,6 @@ import { httpClient } from "@/common/utils/http-client";
 
 type LoginResponse = {
     accessToken: string;
-    refreshToken: string;
 }
 
 type LoginRequest = {

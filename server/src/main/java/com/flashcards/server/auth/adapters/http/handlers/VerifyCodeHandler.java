@@ -15,8 +15,10 @@ import java.util.UUID;
 public class VerifyCodeHandler {
     private final IVerify verify;
     private final ISession session;
+    private final CookieFactory cookieFactory;
 
-    public VerifyCodeHandler(IVerify verify, ISession session) {
+    public VerifyCodeHandler(IVerify verify, ISession session, CookieFactory cookieFactory) {
+        this.cookieFactory = cookieFactory;
         this.verify = verify;
         this.session = session;
     }
@@ -27,8 +29,10 @@ public class VerifyCodeHandler {
         var refreshTokenId = UUID.fromString(jwt.getClaimAsString("id"));
 
         var result = verify.verifyUserByCode(userId, accountId, dto.verificationCode());
-        var access = session.refreshSession(result.user().getId(), result.accountId(), refreshTokenId);
+        var accessToken = session.refreshSession(result.user().getId(), result.accountId(), refreshTokenId);
 
-        return ResponseEntity.ok(Map.of("accessToken", access));
+        response.addCookie(cookieFactory.accessToken(accessToken));
+
+        return ResponseEntity.ok(Map.of("accessToken", accessToken));
     }
 }

@@ -19,7 +19,9 @@ public class LogoutHandler {
 
     public ResponseEntity<Map<String, String>> handle(String refreshToken, HttpServletResponse response) {
         logout.deleteSession(refreshToken);
+
         response.addCookie(cookieFactory.deleteAccessToken());
+        response.addCookie(cookieFactory.deleteRefreshToken());
 
         return ResponseEntity.ok(Map.of("message", "Session has been deleted"));
     }

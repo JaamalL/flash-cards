@@ -4,7 +4,7 @@ import defaultProfileAvatar from "#/default-profile-avatar.svg";
 import Typography from "@/common/components/typography";
 import s from "@/common/components/header/styles/style.module.scss";
 import type { UserDataResponse } from "@/common/hooks/useUserData";
-import Button from "@/common/components/button";
+import { Button } from "@/common/components/button";
 import { useLogout } from "@/common/hooks/useLogout";
 import { FormEvent } from "react";
 

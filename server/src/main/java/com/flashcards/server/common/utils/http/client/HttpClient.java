@@ -80,12 +80,17 @@ public class HttpClient implements IHttpClient
 
     @Override
     public <B> void postAsync(String endpoint, B body, HttpHeaders headers) {
-        log.info(Thread.currentThread().toString());
-        restClient.post()
-                .uri(endpoint)
-                .headers(h -> h.addAll(prepareHeaders(headers)))
-                .body(body)
-                .retrieve()
-                .body(Map.class);
+        Thread.startVirtualThread(() -> {
+            try {
+                restClient.post()
+                        .uri(endpoint)
+                        .headers(h -> h.addAll(prepareHeaders(headers)))
+                        .body(body)
+                        .retrieve()
+                        .body(Map.class);
+            } catch (Exception e) {
+                log.error("Async POST failed to {}: {}", endpoint, e.getMessage());
+            }
+        });
     }
 }

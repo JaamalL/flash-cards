@@ -7,7 +7,6 @@ import { httpClient } from "@/common/utils/http-client";
 
 type RegisterResponse = {
     accessToken: string;
-    refreshToken: string;
 }
 
 export type RegisterRequest = {

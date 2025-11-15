@@ -1,0 +1,44 @@
+﻿:root {
+  --font-size-xl: 32px;
+  --font-size-lg: 24px;
+  --font-size-md: 18px;
+  --font-size-sm: 14px;
+}
+
+:root {
+  --font-weight-xl: 600;
+  --font-weight-lg: 500;
+  --font-weight-md: 400;
+  --font-weight-sm: 300;
+}
+
+:root {
+  --line-height-xl: 1.6;
+  --line-height-lg: 1.5;
+  --line-height-md: 1.4;
+  --line-height-sm: 1.3;
+}
+
+:root {
+    --spacing-xxxxl: 96px;
+    --spacing-xxxl: 72px;
+    --spacing-xxl: 48px;
+    --spacing-xl: 32px;
+    --spacing-lg: 24px;
+    --spacing-md: 18px;
+    --spacing-sm: 14px;
+    --spacing-xs: 8px;
+    --spacing-xxs: 4px;
+}
+:root {
+  --border-radius-xl: 50%;
+  --border-radius-lg: 14px;
+  --border-radius-md: 12px;
+  --border-radius-sm: 10px ;
+}
+
+:root {
+  --border-size-lg: 3px;
+  --border-size-md: 2px;
+  --border-size-sm: 1px;
+}

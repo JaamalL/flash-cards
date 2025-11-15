@@ -3,7 +3,7 @@
 import { FormEvent, ReactNode } from "react";
 import Image from "next/image";
 
-import Button from "@/common/components/button";
+import { Button } from "@/common/components/button";
 import Typography from "@/common/components/typography";
 
 import formImage from "#/2-auth-form-image.png";
@@ -49,7 +49,7 @@ export const AuthFormWrapper = ({
                 <Button
                     onClick={handleGoogle}
                     type="button"
-                    variant="secondary"
+                    variant="outlined"
                     className={`${style.form_button} ${style.form_button_google}`}
                 >
                     <Image

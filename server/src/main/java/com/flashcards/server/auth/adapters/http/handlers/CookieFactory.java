@@ -41,4 +41,13 @@ public class CookieFactory {
         cookie.setMaxAge(0);
         return cookie;
     }
+
+    public Cookie deleteRefreshToken() {
+        var cookie = new Cookie("refreshToken", "");
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setMaxAge(0);
+        return cookie;
+    }
 }
