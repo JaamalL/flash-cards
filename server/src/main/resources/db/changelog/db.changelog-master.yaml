@@ -33,3 +33,13 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
+
+  - changeSet:
+      id: 2
+      author: JaamalL
+      changes:
+        - sqlFile:
+            path: migrations/create_table_flashcards__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
