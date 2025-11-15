@@ -1,6 +1,9 @@
-package com.flashcards.server.common.exceptions;
+package com.flashcards.server.common.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flashcards.server.common.exceptions.ApiException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

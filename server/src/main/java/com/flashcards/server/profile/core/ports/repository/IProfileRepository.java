@@ -1,7 +1,7 @@
 package com.flashcards.server.profile.core.ports.repository;
 
-import com.flashcards.server.common.data.repository.IBaseRepository;
-import com.flashcards.server.profile.core.entites.Profile;
+import com.flashcards.server.common.repository.IBaseRepository;
+import com.flashcards.server.profile.core.entities.Profile;
 
 import java.util.Optional;
 import java.util.UUID;

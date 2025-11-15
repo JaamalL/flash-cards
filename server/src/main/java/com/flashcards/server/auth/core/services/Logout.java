@@ -2,7 +2,7 @@ package com.flashcards.server.auth.core.services;
 
 import com.flashcards.server.auth.core.ports.services.ILogout;
 import com.flashcards.server.auth.core.ports.services.ITokenSerializer;
-import com.flashcards.server.common.data.redis.core.ports.services.IRedisCache;
+import com.flashcards.server.common.redis.core.ports.services.IRedisCache;
 import com.flashcards.server.common.utils.redis.IRedisKeyParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

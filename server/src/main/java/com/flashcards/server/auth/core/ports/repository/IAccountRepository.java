@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.flashcards.server.auth.core.enums.Provider;
 import com.flashcards.server.auth.core.entities.Account;
-import com.flashcards.server.common.data.repository.IBaseRepository;
+import com.flashcards.server.common.repository.IBaseRepository;
 
 public interface IAccountRepository<T extends Account> extends IBaseRepository<T> {
 

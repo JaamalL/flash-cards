@@ -1,4 +1,4 @@
-package com.flashcards.server.common.exceptions;
+package com.flashcards.server.common.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flashcards.server.common.error.ApiError;
@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.util.Map;
 
 @Component
-public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint
+{
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

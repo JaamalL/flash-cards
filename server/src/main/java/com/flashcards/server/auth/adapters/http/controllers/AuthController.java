@@ -60,8 +60,8 @@ public class AuthController
     }
 
     @GetMapping("/verify/token")
-    public RedirectView verifyToken(@RequestParam("verifyToken") String token, HttpServletResponse res) {
-        return verifyTokenHandler.handle(token, res);
+    public RedirectView verifyToken(@RequestParam("verifyToken") String token, HttpServletRequest req, HttpServletResponse res) {
+        return verifyTokenHandler.handle(token, req, res);
     }
 
     @Authorize(allowUnverified = true)

@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 import com.flashcards.server.auth.core.ports.repository.IUserRepository;
 import com.flashcards.server.auth.core.ports.services.ITokenSerializer;
 import com.flashcards.server.auth.core.values.RefreshToken;
-import com.flashcards.server.common.data.redis.core.ports.services.IRedisCache;
+import com.flashcards.server.common.redis.core.ports.services.IRedisCache;
 import com.flashcards.server.common.utils.redis.IRedisKeyParser;
 import com.flashcards.server.auth.core.ports.services.ISession;
 import com.flashcards.server.auth.core.values.AccessToken;

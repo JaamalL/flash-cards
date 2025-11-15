@@ -1,4 +1,4 @@
-package com.flashcards.server.common.data.redis.core.ports.services;
+package com.flashcards.server.common.redis.core.ports.services;
 
 import java.time.Duration;
 

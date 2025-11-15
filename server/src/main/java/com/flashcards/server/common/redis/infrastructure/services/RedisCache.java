@@ -1,6 +1,6 @@
-package com.flashcards.server.common.data.redis.infrastructure.services;
+package com.flashcards.server.common.redis.infrastructure.services;
 
-import com.flashcards.server.common.data.redis.core.ports.services.IRedisCache;
+import com.flashcards.server.common.redis.core.ports.services.IRedisCache;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;

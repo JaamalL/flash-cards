@@ -1,5 +1,9 @@
 package com.flashcards.server.auth.infrastructure.repository;
 
+import com.flashcards.server.auth.core.entities.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.flashcards.server.auth.core.entities.CredentialsAccount;
@@ -10,8 +14,7 @@ public class CredentialsBaseAccountRepository
     extends BaseAccountRepository<CredentialsAccount>
     implements IAccountRepository<CredentialsAccount>
 {
-    public CredentialsBaseAccountRepository()
-    {
-        super(CredentialsAccount.class);
+    public CredentialsBaseAccountRepository(@Qualifier("authEntityManager") EntityManager authEntityManager) {
+        super(CredentialsAccount.class, authEntityManager);
     }
 }

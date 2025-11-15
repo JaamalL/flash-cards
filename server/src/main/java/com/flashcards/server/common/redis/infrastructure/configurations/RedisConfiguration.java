@@ -1,4 +1,4 @@
-package com.flashcards.server.common.data.redis.infrastructure.configurations;
+package com.flashcards.server.common.redis.infrastructure.configurations;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;

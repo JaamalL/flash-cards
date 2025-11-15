@@ -2,7 +2,7 @@ package com.flashcards.server.profile.core.services;
 
 import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
-import com.flashcards.server.profile.core.entites.Profile;
+import com.flashcards.server.profile.core.entities.Profile;
 import com.flashcards.server.profile.core.ports.repository.IProfileRepository;
 import com.flashcards.server.profile.core.ports.services.IProfileDetails;
 import org.springframework.http.HttpStatus;

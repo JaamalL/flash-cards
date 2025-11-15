@@ -4,16 +4,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 import com.flashcards.server.auth.core.enums.Provider;
 import com.flashcards.server.auth.core.entities.Account;
 import com.flashcards.server.auth.core.ports.repository.IAccountRepository;
-import com.flashcards.server.common.data.repository.BaseRepository;
+import com.flashcards.server.common.repository.BaseRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public abstract class BaseAccountRepository<T extends Account> extends BaseRepository<T> implements IAccountRepository<T> {
-    public BaseAccountRepository(Class<T> type) {
-        super(type);
+    public BaseAccountRepository(Class<T> type, @Qualifier("authEntityManager") EntityManager authEntityManager) {
+        super(type, authEntityManager);
     }
 
     @Override

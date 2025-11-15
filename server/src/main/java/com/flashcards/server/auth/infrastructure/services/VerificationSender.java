@@ -7,7 +7,7 @@ import com.flashcards.server.auth.core.ports.services.ITokenSerializer;
 import com.flashcards.server.auth.core.ports.services.IVerificationSender;
 import com.flashcards.server.auth.core.ports.services.IVerifyEmailHtmlBuilder;
 import com.flashcards.server.auth.core.values.VerifyToken;
-import com.flashcards.server.common.data.redis.core.ports.services.IRedisCache;
+import com.flashcards.server.common.redis.core.ports.services.IRedisCache;
 import com.flashcards.server.common.utils.generator.ICodeGenerator;
 import com.flashcards.server.common.utils.hasher.IPasswordHasher;
 import com.flashcards.server.common.utils.http.client.IHttpClient;

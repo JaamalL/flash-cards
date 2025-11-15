@@ -1,4 +1,4 @@
-package com.flashcards.server.common.data.repository;
+package com.flashcards.server.common.repository;
 
 import java.util.List;
 import java.util.Optional;

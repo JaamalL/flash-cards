@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: flashcards
+      changes:
+        - sqlFile:
+            path: migrations/create_table_profiles__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

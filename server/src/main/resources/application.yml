@@ -27,18 +27,15 @@ spring:
       enabled: true
 
   datasource:
+    driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 100
-      minimum-idle: 10
-      idle-timeout: 60000
+      maximum-pool-size: 25
+      minimum-idle: 5
+      idle-timeout: 30000
       max-lifetime: 1800000
-      connection-timeout: 20000
-      leak-detection-threshold: 15000
+      connection-timeout: 15000
+      leak-detection-threshold: 10000
       pool-name: HikariPool
-
-  liquibase:
-    change-log: classpath:db/changelog/db.changelog-master.yaml
-    enabled: true
 
   data:
     redis:

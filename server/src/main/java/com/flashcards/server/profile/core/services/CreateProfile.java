@@ -1,7 +1,7 @@
 package com.flashcards.server.profile.core.services;
 
 import com.flashcards.server.profile.core.dtos.CreateProfileDto;
-import com.flashcards.server.profile.core.entites.Profile;
+import com.flashcards.server.profile.core.entities.Profile;
 import com.flashcards.server.profile.core.ports.repository.IProfileRepository;
 import com.flashcards.server.profile.core.ports.services.ICreateProfile;
 import org.springframework.stereotype.Service;

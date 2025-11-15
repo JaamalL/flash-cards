@@ -1,4 +1,4 @@
-package com.flashcards.server.profile.core.entites;
+package com.flashcards.server.profile.core.entities;
 
 import com.flashcards.server.common.entities.Base;
 import jakarta.persistence.Column;

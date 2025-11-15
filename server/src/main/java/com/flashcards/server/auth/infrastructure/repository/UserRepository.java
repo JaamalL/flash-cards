@@ -1,18 +1,20 @@
 package com.flashcards.server.auth.infrastructure.repository;
 
-import com.flashcards.server.common.data.repository.BaseRepository;
+import com.flashcards.server.common.repository.BaseRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import java.util.Optional;
 
 import com.flashcards.server.auth.core.entities.User;
 import com.flashcards.server.auth.core.ports.repository.IUserRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepository extends BaseRepository<User> implements IUserRepository {
-
-    public UserRepository()  {
-        super(User.class);
+public class UserRepository extends BaseRepository<User> implements IUserRepository
+{
+    public UserRepository(@Qualifier("authEntityManager") EntityManager authEntityManager) {
+        super(User.class, authEntityManager);
     }
 
     @Override

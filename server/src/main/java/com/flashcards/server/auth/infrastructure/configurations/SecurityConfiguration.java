@@ -1,6 +1,6 @@
 package com.flashcards.server.auth.infrastructure.configurations;
 
-import com.flashcards.server.common.exceptions.RestAuthenticationEntryPoint;
+import com.flashcards.server.common.handlers.RestAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

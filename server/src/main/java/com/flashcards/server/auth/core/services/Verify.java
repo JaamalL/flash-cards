@@ -2,7 +2,7 @@ package com.flashcards.server.auth.core.services;
 
 import com.flashcards.server.auth.core.entities.Account;
 import com.flashcards.server.auth.core.ports.repository.IAccountRepository;
-import com.flashcards.server.common.data.redis.core.ports.services.IRedisCache;
+import com.flashcards.server.common.redis.core.ports.services.IRedisCache;
 import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
 import com.flashcards.server.common.utils.hasher.PasswordHasher;
