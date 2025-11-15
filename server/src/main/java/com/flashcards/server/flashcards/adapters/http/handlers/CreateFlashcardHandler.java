@@ -3,9 +3,11 @@ package com.flashcards.server.flashcards.adapters.http.handlers;
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
 import com.flashcards.server.flashcards.core.ports.services.CreateFlashcardPort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class CreateFlashcardHandler {
@@ -15,7 +17,10 @@ public class CreateFlashcardHandler {
         this.createFlashcardPort = createFlashcardPort;
     }
 
-    public ResponseEntity<Map<String, String>> handle(CreateFlashcardDTO createFlashcardDTO) {
-        return ResponseEntity.ok(createFlashcardPort.createFlashcard(createFlashcardDTO));
+    public ResponseEntity<Map<String, String>> handle(Jwt jwt, CreateFlashcardDTO createFlashcardDTO) {
+        return ResponseEntity.ok(createFlashcardPort.createFlashcard(
+                createFlashcardDTO,
+                UUID.fromString(jwt.getSubject())
+        ));
     }
 }
