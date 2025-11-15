@@ -6,9 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public record CreateFlashcardDTO(
-        @NotNull
-        UUID userId,
-
         @NotNull(message = "TextQuestion cannot be null")
         String textQuestion,
 
@@ -17,5 +14,4 @@ public record CreateFlashcardDTO(
         @NotNull(message = "Answer cannot be null")
         @NotBlank(message = "Answer cannot be blank")
         String answer
-) {
-}
+) {}
