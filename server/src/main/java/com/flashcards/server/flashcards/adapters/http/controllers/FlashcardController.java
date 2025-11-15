@@ -5,6 +5,8 @@ import com.flashcards.server.flashcards.adapters.http.handlers.CreateFlashcardHa
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,10 @@ public class FlashcardController {
 
     @Authorize
     @PostMapping("/create")
-    public ResponseEntity<Map<String, String>> create(@RequestBody @Valid CreateFlashcardDTO createFlashcardDTO) {
-        return createFlashcardHandler.handle(createFlashcardDTO);
+    public ResponseEntity<Map<String, String>> create(
+            @AuthenticationPrincipal Jwt jwt,
+            @RequestBody @Valid CreateFlashcardDTO createFlashcardDTO
+    ) {
+        return createFlashcardHandler.handle(jwt, createFlashcardDTO);
     }
 }
