@@ -1,6 +1,7 @@
 package com.flashcards.server.flashcards.adapters.http.handlers;
 
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
+import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
 import com.flashcards.server.flashcards.core.ports.services.CreateFlashcardPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -17,7 +18,7 @@ public class CreateFlashcardHandler {
         this.createFlashcardPort = createFlashcardPort;
     }
 
-    public ResponseEntity<Map<String, String>> handle(Jwt jwt, CreateFlashcardDTO createFlashcardDTO) {
+    public ResponseEntity<FlashcardDTO> handle(Jwt jwt, CreateFlashcardDTO createFlashcardDTO) {
         return ResponseEntity.ok(createFlashcardPort.createFlashcard(
                 createFlashcardDTO,
                 UUID.fromString(jwt.getSubject())
