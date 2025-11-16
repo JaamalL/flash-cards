@@ -1,4 +1,12 @@
 package com.flashcards.server.flashcards.core.ports.repository;
 
-public interface TagRepositoryPort {
+import com.flashcards.server.common.data.repository.IBaseRepository;
+import com.flashcards.server.flashcards.core.entities.Tag;
+
+import java.util.List;
+import java.util.UUID;
+
+public interface TagRepositoryPort extends IBaseRepository<Tag> {
+    List<Tag> findByUserId(UUID userId);
+    List<Tag> findAllById(List<UUID> tagIds);
 }
