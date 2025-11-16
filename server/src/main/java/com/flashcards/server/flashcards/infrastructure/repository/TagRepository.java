@@ -34,8 +34,8 @@ public class TagRepository extends BaseRepository<Tag> implements TagRepositoryP
         }
 
         try {
-            return em.createQuery("SELECT t FROM Tag t WHERE t.id IN :ids", type)
-                    .setParameter(":ids", tagIds)
+            return em.createQuery("SELECT t FROM Tag t WHERE t.id IN :tagIds", type)
+                    .setParameter("tagIds", tagIds)
                     .getResultList();
         } catch (NoResultException ex) {
             return new ArrayList<>();
