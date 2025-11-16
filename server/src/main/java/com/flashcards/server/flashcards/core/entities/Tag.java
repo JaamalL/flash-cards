@@ -6,10 +6,19 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
-@Table(name = "tags")
+@Table(
+        name = "tags",
+        indexes = {
+                @Index(name = "idx_tag_user_id", columnList = "user_id")
+        }
+)
 public class Tag extends Base {
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
+
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -23,10 +32,15 @@ public class Tag extends Base {
     protected Tag() {
     }
 
-    public Tag(String name, String description) {
+    public Tag(UUID userId, String name, String description) {
         super();
+        this.userId = userId;
         this.name = name;
         this.description = description;
+    }
+
+    public UUID getUserId() {
+        return userId;
     }
 
     public String getName() {
