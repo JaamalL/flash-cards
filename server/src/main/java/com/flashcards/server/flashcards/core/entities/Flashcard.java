@@ -11,8 +11,7 @@ import java.util.UUID;
 @Entity
 @Table(
         name = "flashcards",
-        indexes =
-        {
+        indexes = {
                 @Index(name = "idx_flashcards_user_id", columnList = "user_id")
         }
 )
@@ -41,12 +40,7 @@ public class Flashcard extends Base {
     protected Flashcard() {
     }
 
-    public Flashcard(
-            final UUID userId,
-            String textQuestion,
-            String urlQuestion,
-            String answer
-    ) {
+    public Flashcard(UUID userId, String textQuestion, String urlQuestion, String answer) {
         super();
         this.userId = userId;
         this.textQuestion = textQuestion;
