@@ -43,3 +43,13 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
+
+  - changeSet:
+      id: 3
+      author: JaamalL
+      changes:
+        - sqlFile:
+            path: migrations/create_table_tags__1.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
