@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "flashcard_tags")
-public class FlashcardTag extends Base {
+@Table(name = "tags")
+public class Tag extends Base {
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -20,10 +20,10 @@ public class FlashcardTag extends Base {
     @JsonBackReference
     private final Set<Flashcard> flashcards = new HashSet<>();
 
-    protected FlashcardTag() {
+    protected Tag() {
     }
 
-    public FlashcardTag(String name, String description) {
+    public Tag(String name, String description) {
         super();
         this.name = name;
         this.description = description;
