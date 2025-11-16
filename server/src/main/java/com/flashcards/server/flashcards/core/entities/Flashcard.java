@@ -1,11 +1,11 @@
 package com.flashcards.server.flashcards.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.flashcards.server.common.entities.Base;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Index;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +28,15 @@ public class Flashcard extends Base {
 
     @Column(name = "answer")
     private String answer;
+
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(
+            name = "flashcard_tags",
+            joinColumns = @JoinColumn(name = "flashcard_id"),
+            inverseJoinColumns = @JoinColumn(name = "flashcard_tag_id")
+    )
+    @JsonManagedReference
+    private Set<Tag> tags = new HashSet<>();
 
     protected Flashcard() {
     }
@@ -61,6 +70,10 @@ public class Flashcard extends Base {
         return answer;
     }
 
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
     public void setTextQuestion(String textQuestion) {
         this.textQuestion = textQuestion;
     }
@@ -71,5 +84,15 @@ public class Flashcard extends Base {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.getFlashcards().add(this);
+    }
+
+    public void removeTag(Tag tag) {
+        tags.remove(tag);
+        tag.getFlashcards().remove(this);
     }
 }
