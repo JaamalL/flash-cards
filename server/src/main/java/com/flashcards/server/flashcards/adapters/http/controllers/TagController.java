@@ -3,6 +3,7 @@ package com.flashcards.server.flashcards.adapters.http.controllers;
 import com.flashcards.server.common.annotation.Authorize;
 import com.flashcards.server.flashcards.adapters.http.handlers.CreateTagHandler;
 import com.flashcards.server.flashcards.core.dto.CreateTagDTO;
+import com.flashcards.server.flashcards.core.dto.TagDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +26,7 @@ public class TagController {
 
     @Authorize
     @PostMapping
-    public ResponseEntity<Map<String, String>> create(
+    public ResponseEntity<TagDTO> create(
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody @Valid CreateTagDTO createTagDTO
     ) {
