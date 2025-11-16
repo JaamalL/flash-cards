@@ -1,6 +1,7 @@
 package com.flashcards.server.flashcards.adapters.http.handlers;
 
 import com.flashcards.server.flashcards.core.dto.CreateTagDTO;
+import com.flashcards.server.flashcards.core.dto.TagDTO;
 import com.flashcards.server.flashcards.core.ports.services.CreateTagPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -17,7 +18,7 @@ public class CreateTagHandler {
         this.createTagPort = createTagPort;
     }
 
-    public ResponseEntity<Map<String, String>> handle(Jwt jwt, CreateTagDTO createTagDTO) {
+    public ResponseEntity<TagDTO> handle(Jwt jwt, CreateTagDTO createTagDTO) {
         return ResponseEntity.ok(createTagPort.createTag(
                 createTagDTO,
                 UUID.fromString(jwt.getSubject())
