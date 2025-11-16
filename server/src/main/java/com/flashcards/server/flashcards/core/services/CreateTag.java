@@ -1,6 +1,7 @@
 package com.flashcards.server.flashcards.core.services;
 
 import com.flashcards.server.flashcards.core.dto.CreateTagDTO;
+import com.flashcards.server.flashcards.core.dto.TagDTO;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.TagRepositoryPort;
 import com.flashcards.server.flashcards.core.ports.services.CreateTagPort;
@@ -19,7 +20,7 @@ public class CreateTag implements CreateTagPort {
     }
 
     @Override
-    public Map<String, String> createTag(CreateTagDTO createTagDTO, UUID userId) {
+    public TagDTO createTag(CreateTagDTO createTagDTO, UUID userId) {
         Tag entity = new Tag(
                 userId,
                 createTagDTO.name(),
@@ -28,11 +29,10 @@ public class CreateTag implements CreateTagPort {
 
         tagRepositoryPort.create(entity);
 
-        Map<String, String> result = new HashMap<>();
-        result.put("id", entity.getId().toString());
-        result.put("name", entity.getName());
-        result.put("description", entity.getDescription());
-
-        return result;
+        return new TagDTO(
+                entity.getId(),
+                entity.getName(),
+                entity.getDescription()
+        );
     }
 }
