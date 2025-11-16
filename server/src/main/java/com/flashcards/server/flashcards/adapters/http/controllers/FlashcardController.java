@@ -24,7 +24,7 @@ public class FlashcardController {
     }
 
     @Authorize
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Map<String, String>> create(
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody @Valid CreateFlashcardDTO createFlashcardDTO
