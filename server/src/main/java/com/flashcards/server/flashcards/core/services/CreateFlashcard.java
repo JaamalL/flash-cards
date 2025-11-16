@@ -3,6 +3,7 @@ package com.flashcards.server.flashcards.core.services;
 import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
+import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
 import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.FlashcardRepositoryPort;
@@ -27,7 +28,7 @@ public class CreateFlashcard implements CreateFlashcardPort {
     }
 
     @Override
-    public Map<String, String> createFlashcard(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
+    public FlashcardDTO createFlashcard(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
         List<Tag> tags = tagRepositoryPort.findAllById(createFlashcardDTO.tagIds());
 
         if (tags.size() != createFlashcardDTO.tagIds().size()) {
@@ -51,13 +52,12 @@ public class CreateFlashcard implements CreateFlashcardPort {
 
         flashcardRepository.create(entity);
 
-        Map<String, String> result = new HashMap<>();
-        result.put("id", entity.getId().toString());
-        result.put("userId", entity.getUserId().toString());
-        result.put("testQuestion", entity.getTextQuestion());
-        result.put("urlQuestion", entity.getUrlQuestion());
-        result.put("answer", entity.getAnswer());
-
-        return result;
+        return new FlashcardDTO(
+                entity.getId(),
+                entity.getTextQuestion(),
+                entity.getUrlQuestion(),
+                entity.getAnswer(),
+                createFlashcardDTO.tagIds()
+        );
     }
 }
