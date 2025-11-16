@@ -24,6 +24,7 @@ public class FlashcardTag extends Base {
     }
 
     public FlashcardTag(String name, String description) {
+        super();
         this.name = name;
         this.description = description;
     }
