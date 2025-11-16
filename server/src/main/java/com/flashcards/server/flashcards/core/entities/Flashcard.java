@@ -32,7 +32,7 @@ public class Flashcard extends Base {
     @JoinTable(
             name = "flashcard_tags",
             joinColumns = @JoinColumn(name = "flashcard_id"),
-            inverseJoinColumns = @JoinColumn(name = "flashcard_tag_id")
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     @JsonManagedReference
     private Set<Tag> tags = new HashSet<>();
