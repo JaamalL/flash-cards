@@ -18,13 +18,9 @@ public class FlashcardRepository extends BaseRepository<Flashcard> implements Fl
 
     @Override
     public List<Flashcard> findByUserId(UUID userId) {
-        try {
-            return em.createQuery(
-                            "SELECT f FROM Flashcard f WHERE f.userId = :userId", type)
-                    .setParameter("userId", userId)
-                    .getResultList();
-        } catch (NoResultException ex) {
-            return new ArrayList<>();
-        }
+        return em.createQuery(
+                        "SELECT f FROM Flashcard f WHERE f.userId = :userId", type)
+                .setParameter("userId", userId)
+                .getResultList();
     }
 }
