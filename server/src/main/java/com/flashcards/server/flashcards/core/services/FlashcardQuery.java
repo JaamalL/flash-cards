@@ -32,7 +32,7 @@ public class FlashcardQuery implements FlashcardQueryPort {
     public List<FlashcardDTO> getByTagIds(UUID userId, List<UUID> tagIds, TagMatchMode tagMatchMode) {
         if (tagRepositoryPort.countByUserIdAndIds(userId, tagIds) != tagIds.size()) {
             throw new ApiException(new ApiError(
-                    HttpStatus.FORBIDDEN,
+                    HttpStatus.BAD_REQUEST,
                     "INVALID_TAG_ID",
                     "One or more provided tag IDs are invalid or non-existent"
             ));
