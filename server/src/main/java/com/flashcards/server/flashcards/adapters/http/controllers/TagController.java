@@ -52,7 +52,10 @@ public class TagController {
 
     @Authorize
     @GetMapping("{tagId}")
-    public ResponseEntity<TagDetailsDTO> getById(@PathVariable UUID tagId) {
-        return getTagByIdHandler.handle(tagId);
+    public ResponseEntity<TagDetailsDTO> getById(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID tagId
+    ) {
+        return getTagByIdHandler.handle(jwt, tagId);
     }
 }
