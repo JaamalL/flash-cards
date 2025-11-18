@@ -33,4 +33,18 @@ public class TagRepository extends BaseRepository<Tag> implements TagRepositoryP
                 .setParameter("tagIds", tagIds)
                 .getResultList();
     }
+
+    @Override
+    public long countByUserIdAndIds(UUID userId, List<UUID> tagIds) {
+        if (tagIds == null || tagIds.isEmpty()) {
+            return 0;
+        }
+
+        return em.createQuery(
+                "SELECT COUNT(t.id) FROM Tag t " +
+                        "WHERE t.id IN :tagIds AND t.userId = :userId", Long.class)
+                .setParameter("tagIds", tagIds)
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
 }
