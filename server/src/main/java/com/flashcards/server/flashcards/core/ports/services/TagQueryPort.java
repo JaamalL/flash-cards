@@ -6,7 +6,7 @@ import com.flashcards.server.flashcards.core.dto.TagDetailsDTO;
 import java.util.List;
 import java.util.UUID;
 
-public interface FindTagsPort {
+public interface TagQueryPort {
     List<TagDTO> findByUserId(UUID userId);
     TagDetailsDTO findById(UUID tagId);
 }

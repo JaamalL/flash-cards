@@ -6,9 +6,8 @@ import com.flashcards.server.flashcards.core.dto.TagDTO;
 import com.flashcards.server.flashcards.core.dto.TagDetailsDTO;
 import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.entities.Tag;
-import com.flashcards.server.flashcards.core.enums.TagSearchScope;
 import com.flashcards.server.flashcards.core.ports.repository.TagRepositoryPort;
-import com.flashcards.server.flashcards.core.ports.services.FindTagsPort;
+import com.flashcards.server.flashcards.core.ports.services.TagQueryPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +15,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class FindTags implements FindTagsPort {
+public class TagQuery implements TagQueryPort {
     private final TagRepositoryPort tagRepositoryPort;
 
-    public FindTags(TagRepositoryPort tagRepositoryPort) {
+    public TagQuery(TagRepositoryPort tagRepositoryPort) {
         this.tagRepositoryPort = tagRepositoryPort;
     }
 

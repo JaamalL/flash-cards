@@ -1,7 +1,7 @@
 package com.flashcards.server.flashcards.adapters.http.handlers;
 
 import com.flashcards.server.flashcards.core.dto.TagDetailsDTO;
-import com.flashcards.server.flashcards.core.ports.services.FindTagsPort;
+import com.flashcards.server.flashcards.core.ports.services.TagQueryPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -9,13 +9,13 @@ import java.util.UUID;
 
 @Component
 public class FindTagByIdHandler {
-    private final FindTagsPort findTagsPort;
+    private final TagQueryPort tagQueryPort;
 
-    public FindTagByIdHandler(FindTagsPort findTagsPort) {
-        this.findTagsPort = findTagsPort;
+    public FindTagByIdHandler(TagQueryPort tagQueryPort) {
+        this.tagQueryPort = tagQueryPort;
     }
 
     public ResponseEntity<TagDetailsDTO> handle(UUID tagId) {
-        return ResponseEntity.ok(findTagsPort.findById(tagId));
+        return ResponseEntity.ok(tagQueryPort.findById(tagId));
     }
 }
