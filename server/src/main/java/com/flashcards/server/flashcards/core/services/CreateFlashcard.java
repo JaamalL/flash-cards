@@ -29,15 +29,16 @@ public class CreateFlashcard implements CreateFlashcardPort {
 
     @Override
     public FlashcardDTO createFlashcard(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
-        List<Tag> tags = tagRepositoryPort.findAllById(createFlashcardDTO.tagIds());
-
-        if (tags.size() != createFlashcardDTO.tagIds().size()) {
+        if (tagRepositoryPort.countByUserIdAndIds(userId, createFlashcardDTO.tagIds()) !=
+                createFlashcardDTO.tagIds().size()) {
             throw new ApiException(new ApiError(
                     HttpStatus.BAD_REQUEST,
                     "INVALID_TAG_ID",
                     "One or more provided tag IDs are invalid or non-existent"
             ));
         }
+
+        List<Tag> tags = tagRepositoryPort.findAllById(createFlashcardDTO.tagIds());
 
         Flashcard flashcard = new Flashcard(
                 userId,
