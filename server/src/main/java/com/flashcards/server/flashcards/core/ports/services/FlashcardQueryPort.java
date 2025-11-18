@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface FlashcardQueryPort {
-    List<FlashcardDTO> findByTagIds(UUID uuid, List<UUID> tagIds, TagMatchMode tagMatchMode);
+    List<FlashcardDTO> getByTagIds(UUID uuid, List<UUID> tagIds, TagMatchMode tagMatchMode);
 }

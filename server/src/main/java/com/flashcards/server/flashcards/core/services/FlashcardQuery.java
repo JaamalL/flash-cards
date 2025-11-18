@@ -29,7 +29,7 @@ public class FlashcardQuery implements FlashcardQueryPort {
     }
 
     @Override
-    public List<FlashcardDTO> findByTagIds(UUID userId, List<UUID> tagIds, TagMatchMode tagMatchMode) {
+    public List<FlashcardDTO> getByTagIds(UUID userId, List<UUID> tagIds, TagMatchMode tagMatchMode) {
         if (tagRepositoryPort.countByUserIdAndIds(userId, tagIds) != tagIds.size()) {
             throw new ApiException(new ApiError(
                     HttpStatus.FORBIDDEN,

@@ -19,7 +19,7 @@ public class FindFlashcardsByTagIdsHandler {
     }
 
     public ResponseEntity<List<FlashcardDTO>> handle(Jwt jwt, List<UUID> tagIds, TagMatchMode tagMatchMode) {
-        return ResponseEntity.ok(flashcardQueryPort.findByTagIds(
+        return ResponseEntity.ok(flashcardQueryPort.getByTagIds(
                 UUID.fromString(jwt.getSubject()),
                 tagIds,
                 tagMatchMode
