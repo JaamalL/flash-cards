@@ -39,7 +39,7 @@ public class CreateFlashcard implements CreateFlashcardPort {
             ));
         }
 
-        Flashcard entity = new Flashcard(
+        Flashcard flashcard = new Flashcard(
                 userId,
                 createFlashcardDTO.textQuestion(),
                 createFlashcardDTO.urlQuestion(),
@@ -47,16 +47,16 @@ public class CreateFlashcard implements CreateFlashcardPort {
         );
 
         for (Tag tag : tags) {
-            entity.addTag(tag);
+            flashcard.addTag(tag);
         }
 
-        flashcardRepository.create(entity);
+        flashcardRepository.create(flashcard);
 
         return new FlashcardDTO(
-                entity.getId(),
-                entity.getTextQuestion(),
-                entity.getUrlQuestion(),
-                entity.getAnswer(),
+                flashcard.getId(),
+                flashcard.getTextQuestion(),
+                flashcard.getUrlQuestion(),
+                flashcard.getAnswer(),
                 createFlashcardDTO.tagIds()
         );
     }
