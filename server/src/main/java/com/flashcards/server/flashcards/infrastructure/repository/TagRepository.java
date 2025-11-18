@@ -18,13 +18,9 @@ public class TagRepository extends BaseRepository<Tag> implements TagRepositoryP
 
     @Override
     public List<Tag> findByUserId(UUID userId) {
-        try {
-            return em.createQuery("SELECT t FROM Tag t WHERE t.userId = :userId", type)
-                    .setParameter("userId", userId)
-                    .getResultList();
-        } catch (NoResultException ex) {
-            return new ArrayList<>();
-        }
+        return em.createQuery("SELECT t FROM Tag t WHERE t.userId = :userId", type)
+                .setParameter("userId", userId)
+                .getResultList();
     }
 
     @Override
@@ -33,12 +29,8 @@ public class TagRepository extends BaseRepository<Tag> implements TagRepositoryP
             return new ArrayList<>();
         }
 
-        try {
-            return em.createQuery("SELECT t FROM Tag t WHERE t.id IN :tagIds", type)
-                    .setParameter("tagIds", tagIds)
-                    .getResultList();
-        } catch (NoResultException ex) {
-            return new ArrayList<>();
-        }
+        return em.createQuery("SELECT t FROM Tag t WHERE t.id IN :tagIds", type)
+                .setParameter("tagIds", tagIds)
+                .getResultList();
     }
 }
