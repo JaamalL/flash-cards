@@ -23,4 +23,34 @@ public class FlashcardRepository extends BaseRepository<Flashcard> implements Fl
                 .setParameter("userId", userId)
                 .getResultList();
     }
+
+    @Override
+    public List<Flashcard> findByUserIdAndAnyTagIds(UUID userId, List<UUID> tagIds) {
+        if (tagIds == null || tagIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return em.createQuery(
+                "SELECT f FROM Flashcard f JOIN f.tags t " +
+                        "WHERE f.userId = :userId AND t.id IN :tagIds GROUP BY f.id", type)
+                .setParameter("userId", userId)
+                .setParameter("tagIds", tagIds)
+                .getResultList();
+    }
+
+    @Override
+    public List<Flashcard> findByUserIdAndAllTagIds(UUID userId, List<UUID> tagIds) {
+        if (tagIds == null || tagIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return em.createQuery(
+                        "SELECT f FROM Flashcard f JOIN f.tags t " +
+                                "WHERE f.userId = :userId AND t.id IN :tagIds " +
+                                "GROUP BY f.id HAVING COUNT(t.id) = :tagCount", type)
+                .setParameter("userId", userId)
+                .setParameter("tagIds", tagIds)
+                .setParameter("tagCount", tagIds.size())
+                .getResultList();
+    }
 }
