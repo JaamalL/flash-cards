@@ -23,7 +23,7 @@ public class TagQuery implements TagQueryPort {
     }
 
     @Override
-    public List<TagDTO> findByUserId(UUID userId) {
+    public List<TagDTO> getByUserId(UUID userId) {
         List<Tag> tags = tagRepositoryPort.findByUserId(userId);
 
         return tags.stream().map(tag ->
@@ -36,7 +36,7 @@ public class TagQuery implements TagQueryPort {
     }
 
     @Override
-    public TagDetailsDTO findById(UUID tagId) {
+    public TagDetailsDTO getById(UUID tagId) {
         Tag tag = tagRepositoryPort.findById(tagId)
                 .orElseThrow(() -> new ApiException(new ApiError(
                                 HttpStatus.BAD_REQUEST,

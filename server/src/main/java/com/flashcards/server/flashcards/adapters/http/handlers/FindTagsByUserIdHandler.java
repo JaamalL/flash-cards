@@ -18,7 +18,7 @@ public class FindTagsByUserIdHandler {
     }
 
     public ResponseEntity<List<TagDTO>> handle(Jwt jwt) {
-        return ResponseEntity.ok(tagQueryPort.findByUserId(
+        return ResponseEntity.ok(tagQueryPort.getByUserId(
                 UUID.fromString(jwt.getSubject())
         ));
     }

@@ -16,6 +16,6 @@ public class FindTagByIdHandler {
     }
 
     public ResponseEntity<TagDetailsDTO> handle(UUID tagId) {
-        return ResponseEntity.ok(tagQueryPort.findById(tagId));
+        return ResponseEntity.ok(tagQueryPort.getById(tagId));
     }
 }

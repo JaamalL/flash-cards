@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TagQueryPort {
-    List<TagDTO> findByUserId(UUID userId);
-    TagDetailsDTO findById(UUID tagId);
+    List<TagDTO> getByUserId(UUID userId);
+    TagDetailsDTO getById(UUID tagId);
 }
