@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -21,6 +22,19 @@ public class TagRepository extends BaseRepository<Tag> implements TagRepositoryP
         return em.createQuery("SELECT t FROM Tag t WHERE t.userId = :userId", type)
                 .setParameter("userId", userId)
                 .getResultList();
+    }
+
+    @Override
+    public Optional<Tag> findByUserIdAndId(UUID userId, UUID tagId) {
+        try {
+            return Optional.of(em.createQuery("SELECT t FROM Tag t " +
+                            "WHERE t.userId = :userId AND t.id = :tagId", type)
+                    .setParameter("userId", userId)
+                    .setParameter("tagId", tagId)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override
