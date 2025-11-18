@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class FindTagsByUserIdHandler {
+public class GetTagsByUserIdHandler {
     private final TagQueryPort tagQueryPort;
 
-    public FindTagsByUserIdHandler(TagQueryPort tagQueryPort) {
+    public GetTagsByUserIdHandler(TagQueryPort tagQueryPort) {
         this.tagQueryPort = tagQueryPort;
     }
 

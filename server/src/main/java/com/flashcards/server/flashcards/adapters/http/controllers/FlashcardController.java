@@ -2,7 +2,7 @@ package com.flashcards.server.flashcards.adapters.http.controllers;
 
 import com.flashcards.server.common.annotation.Authorize;
 import com.flashcards.server.flashcards.adapters.http.handlers.CreateFlashcardHandler;
-import com.flashcards.server.flashcards.adapters.http.handlers.FindFlashcardsByTagIdsHandler;
+import com.flashcards.server.flashcards.adapters.http.handlers.GetFlashcardsByTagIdsHandler;
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
 import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
 import com.flashcards.server.flashcards.core.enums.TagMatchMode;
@@ -13,21 +13,20 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("flashcards")
 public class FlashcardController {
     private final CreateFlashcardHandler createFlashcardHandler;
-    private final FindFlashcardsByTagIdsHandler findFlashcardsByTagIdsHandler;
+    private final GetFlashcardsByTagIdsHandler getFlashcardsByTagIdsHandler;
 
     public FlashcardController(
             CreateFlashcardHandler createFlashcardHandler,
-            FindFlashcardsByTagIdsHandler findFlashcardsByTagIdsHandler
+            GetFlashcardsByTagIdsHandler getFlashcardsByTagIdsHandler
     ) {
         this.createFlashcardHandler = createFlashcardHandler;
-        this.findFlashcardsByTagIdsHandler = findFlashcardsByTagIdsHandler;
+        this.getFlashcardsByTagIdsHandler = getFlashcardsByTagIdsHandler;
     }
 
     @Authorize
@@ -46,6 +45,6 @@ public class FlashcardController {
             @RequestParam(name = "matchMode", defaultValue = "ALL") TagMatchMode tagMatchMode,
             @RequestParam(name = "tagId") List<UUID> tagIds
     ) {
-        return findFlashcardsByTagIdsHandler.handle(jwt, tagIds, tagMatchMode);
+        return getFlashcardsByTagIdsHandler.handle(jwt, tagIds, tagMatchMode);
     }
 }

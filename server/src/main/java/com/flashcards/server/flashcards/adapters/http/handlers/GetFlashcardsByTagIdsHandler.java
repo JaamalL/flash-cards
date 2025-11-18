@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class FindFlashcardsByTagIdsHandler {
+public class GetFlashcardsByTagIdsHandler {
     private final FlashcardQueryPort flashcardQueryPort;
 
-    public FindFlashcardsByTagIdsHandler(FlashcardQueryPort flashcardQueryPort) {
+    public GetFlashcardsByTagIdsHandler(FlashcardQueryPort flashcardQueryPort) {
         this.flashcardQueryPort = flashcardQueryPort;
     }
 

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class FindTagByIdHandler {
+public class GetTagByIdHandler {
     private final TagQueryPort tagQueryPort;
 
-    public FindTagByIdHandler(TagQueryPort tagQueryPort) {
+    public GetTagByIdHandler(TagQueryPort tagQueryPort) {
         this.tagQueryPort = tagQueryPort;
     }
 
