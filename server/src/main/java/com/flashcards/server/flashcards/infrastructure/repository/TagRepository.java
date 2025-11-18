@@ -24,7 +24,7 @@ public class TagRepository extends BaseRepository<Tag> implements TagRepositoryP
     }
 
     @Override
-    public List<Tag> findAllById(List<UUID> tagIds) {
+    public List<Tag> findAllByIds(List<UUID> tagIds) {
         if (tagIds == null || tagIds.isEmpty()) {
             return new ArrayList<>();
         }

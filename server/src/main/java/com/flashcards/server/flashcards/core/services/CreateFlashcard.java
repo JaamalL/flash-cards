@@ -12,9 +12,7 @@ import com.flashcards.server.flashcards.core.ports.services.CreateFlashcardPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -38,7 +36,7 @@ public class CreateFlashcard implements CreateFlashcardPort {
             ));
         }
 
-        List<Tag> tags = tagRepositoryPort.findAllById(createFlashcardDTO.tagIds());
+        List<Tag> tags = tagRepositoryPort.findAllByIds(createFlashcardDTO.tagIds());
 
         Flashcard flashcard = new Flashcard(
                 userId,

@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface TagRepositoryPort extends IBaseRepository<Tag> {
     List<Tag> findByUserId(UUID userId);
-    List<Tag> findAllById(List<UUID> tagIds);
+    List<Tag> findAllByIds(List<UUID> tagIds);
     long countByUserIdAndIds(UUID userId, List<UUID> tagIds);
 }
