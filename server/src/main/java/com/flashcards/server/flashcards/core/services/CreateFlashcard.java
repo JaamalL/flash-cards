@@ -36,7 +36,7 @@ public class CreateFlashcard implements CreateFlashcardPort {
             ));
         }
 
-        List<Tag> tags = tagRepositoryPort.findAllByIds(createFlashcardDTO.tagIds());
+        List<Tag> tags = tagRepositoryPort.findByIds(createFlashcardDTO.tagIds());
 
         Flashcard flashcard = new Flashcard(
                 userId,
