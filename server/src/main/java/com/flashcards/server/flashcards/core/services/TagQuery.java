@@ -36,8 +36,8 @@ public class TagQuery implements TagQueryPort {
     }
 
     @Override
-    public TagDetailsDTO getById(UUID tagId) {
-        Tag tag = tagRepositoryPort.findById(tagId)
+    public TagDetailsDTO getById(UUID userId, UUID tagId) {
+        Tag tag = tagRepositoryPort.findByUserIdAndId(userId, tagId)
                 .orElseThrow(() -> new ApiException(new ApiError(
                                 HttpStatus.BAD_REQUEST,
                                 "INVALID_ID",
