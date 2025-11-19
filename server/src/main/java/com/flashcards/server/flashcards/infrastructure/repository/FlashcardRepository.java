@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -22,6 +23,19 @@ public class FlashcardRepository extends BaseRepository<Flashcard> implements Fl
                         "SELECT f FROM Flashcard f WHERE f.userId = :userId", type)
                 .setParameter("userId", userId)
                 .getResultList();
+    }
+
+    @Override
+    public Optional<Flashcard> findByUserIdAndId(UUID userId, UUID flashcardId) {
+        try {
+            return Optional.of(em.createQuery("SELECT f FROM Flashcard f " +
+                            "WHERE f.userId = :userId AND f.id = :flashcardId", type)
+                    .setParameter("userId", userId)
+                    .setParameter("flashcardId", flashcardId)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override
