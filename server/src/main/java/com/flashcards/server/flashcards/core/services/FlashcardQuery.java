@@ -3,6 +3,7 @@ package com.flashcards.server.flashcards.core.services;
 import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
 import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
+import com.flashcards.server.flashcards.core.dto.FlashcardDetailsDTO;
 import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.enums.TagMatchMode;
@@ -26,6 +27,40 @@ public class FlashcardQuery implements FlashcardQueryPort {
     ) {
         this.flashcardRepositoryPort = flashcardRepositoryPort;
         this.tagRepositoryPort = tagRepositoryPort;
+    }
+
+    @Override
+    public List<FlashcardDTO> getByUserId(UUID userId) {
+        List<Flashcard> flashcards = flashcardRepositoryPort.findByUserId(userId);
+
+        return flashcards.stream().map(flashcard ->
+                new FlashcardDTO(
+                        flashcard.getId(),
+                        flashcard.getTextQuestion(),
+                        flashcard.getUrlQuestion(),
+                        flashcard.getAnswer(),
+                        flashcard.getTags().stream().map(Tag::getId).toList()
+                )
+        ).toList();
+    }
+
+    @Override
+    public FlashcardDetailsDTO getById(UUID userId, UUID flashcardId) {
+        Flashcard flashcard = flashcardRepositoryPort.findByUserIdAndId(userId, flashcardId)
+                .orElseThrow(() -> new ApiException(new ApiError(
+                        HttpStatus.BAD_REQUEST,
+                        "INVALID_FLASHCARD_ID",
+                        "There is no entities with provided ID"
+                )));
+
+        return new FlashcardDetailsDTO(
+                flashcard.getId(),
+                flashcard.getTextQuestion(),
+                flashcard.getUrlQuestion(),
+                flashcard.getAnswer(),
+                flashcard.getTags().stream().map(Tag::getId).toList(),
+                flashcard.getCreatedAt().toString()
+        );
     }
 
     @Override
