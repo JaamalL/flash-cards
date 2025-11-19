@@ -44,9 +44,7 @@ public class TagController {
 
     @Authorize
     @GetMapping
-    public ResponseEntity<List<TagDTO>> getAll(
-            @AuthenticationPrincipal Jwt jwt
-    ) {
+    public ResponseEntity<List<TagDTO>> getAll(@AuthenticationPrincipal Jwt jwt) {
         return getTagsByUserIdHandler.handle(jwt);
     }
 
