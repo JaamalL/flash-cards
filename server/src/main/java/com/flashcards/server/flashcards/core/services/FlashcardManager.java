@@ -8,7 +8,7 @@ import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.FlashcardRepositoryPort;
 import com.flashcards.server.flashcards.core.ports.repository.TagRepositoryPort;
-import com.flashcards.server.flashcards.core.ports.services.CreateFlashcardPort;
+import com.flashcards.server.flashcards.core.ports.services.FlashcardManagerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class CreateFlashcard implements CreateFlashcardPort {
+public class FlashcardManager implements FlashcardManagerPort {
     private final FlashcardRepositoryPort flashcardRepository;
     private final TagRepositoryPort tagRepositoryPort;
 
-    public CreateFlashcard(FlashcardRepositoryPort flashcardRepository, TagRepositoryPort tagRepositoryPort) {
+    public FlashcardManager(FlashcardRepositoryPort flashcardRepository, TagRepositoryPort tagRepositoryPort) {
         this.flashcardRepository = flashcardRepository;
         this.tagRepositoryPort = tagRepositoryPort;
     }
