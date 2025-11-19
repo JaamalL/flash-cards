@@ -40,9 +40,9 @@ public class TagQuery implements TagQueryPort {
         Tag tag = tagRepositoryPort.findByUserIdAndId(userId, tagId)
                 .orElseThrow(() -> new ApiException(new ApiError(
                                 HttpStatus.BAD_REQUEST,
-                                "INVALID_ID",
+                                "INVALID_TAG_ID",
                                 "There is no entities with provided ID"
-        )));
+                )));
 
         return new TagDetailsDTO(
                 tag.getId(),
