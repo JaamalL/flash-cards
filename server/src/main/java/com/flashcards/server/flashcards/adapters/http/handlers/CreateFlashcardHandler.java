@@ -18,7 +18,7 @@ public class CreateFlashcardHandler {
     }
 
     public ResponseEntity<FlashcardDTO> handle(Jwt jwt, CreateFlashcardDTO createFlashcardDTO) {
-        return ResponseEntity.ok(flashcardManagerPort.createFlashcard(
+        return ResponseEntity.ok(flashcardManagerPort.create(
                 createFlashcardDTO,
                 UUID.fromString(jwt.getSubject())
         ));

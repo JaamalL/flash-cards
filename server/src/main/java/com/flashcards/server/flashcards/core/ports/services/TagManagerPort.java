@@ -6,5 +6,5 @@ import com.flashcards.server.flashcards.core.dto.TagDTO;
 import java.util.UUID;
 
 public interface TagManagerPort {
-    TagDTO createTag(CreateTagDTO createTagDTO, UUID userId);
+    TagDTO create(CreateTagDTO createTagDTO, UUID userId);
 }

@@ -26,7 +26,7 @@ public class FlashcardManager implements FlashcardManagerPort {
     }
 
     @Override
-    public FlashcardDTO createFlashcard(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
+    public FlashcardDTO create(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
         if (tagRepositoryPort.countByUserIdAndIds(userId, createFlashcardDTO.tagIds()) !=
                 createFlashcardDTO.tagIds().size()) {
             throw new ApiException(new ApiError(

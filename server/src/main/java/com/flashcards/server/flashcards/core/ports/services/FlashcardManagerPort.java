@@ -6,5 +6,5 @@ import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
 import java.util.UUID;
 
 public interface FlashcardManagerPort {
-    FlashcardDTO createFlashcard(CreateFlashcardDTO createFlashcardDTO, UUID userId);
+    FlashcardDTO create(CreateFlashcardDTO createFlashcardDTO, UUID userId);
 }

@@ -18,7 +18,7 @@ public class CreateTagHandler {
     }
 
     public ResponseEntity<TagDTO> handle(Jwt jwt, CreateTagDTO createTagDTO) {
-        return ResponseEntity.ok(tagManagerPort.createTag(
+        return ResponseEntity.ok(tagManagerPort.create(
                 createTagDTO,
                 UUID.fromString(jwt.getSubject())
         ));

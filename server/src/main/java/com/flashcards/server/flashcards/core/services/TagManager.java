@@ -18,7 +18,7 @@ public class TagManager implements TagManagerPort {
     }
 
     @Override
-    public TagDTO createTag(CreateTagDTO createTagDTO, UUID userId) {
+    public TagDTO create(CreateTagDTO createTagDTO, UUID userId) {
         Tag entity = new Tag(
                 userId,
                 createTagDTO.name(),
