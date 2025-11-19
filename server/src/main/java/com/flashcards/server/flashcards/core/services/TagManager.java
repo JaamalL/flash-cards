@@ -4,18 +4,16 @@ import com.flashcards.server.flashcards.core.dto.CreateTagDTO;
 import com.flashcards.server.flashcards.core.dto.TagDTO;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.TagRepositoryPort;
-import com.flashcards.server.flashcards.core.ports.services.CreateTagPort;
+import com.flashcards.server.flashcards.core.ports.services.TagManagerPort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class CreateTag implements CreateTagPort {
+public class TagManager implements TagManagerPort {
     private final TagRepositoryPort tagRepositoryPort;
 
-    public CreateTag(TagRepositoryPort tagRepositoryPort) {
+    public TagManager(TagRepositoryPort tagRepositoryPort) {
         this.tagRepositoryPort = tagRepositoryPort;
     }
 
