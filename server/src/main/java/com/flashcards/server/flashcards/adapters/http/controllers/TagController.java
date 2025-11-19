@@ -35,7 +35,7 @@ public class TagController {
 
     @Authorize
     @PostMapping
-    public ResponseEntity<TagDTO> create(
+    public ResponseEntity<TagDetailsDTO> create(
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody @Valid CreateTagDTO createTagDTO
     ) {

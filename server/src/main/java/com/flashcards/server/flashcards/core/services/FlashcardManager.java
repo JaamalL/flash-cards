@@ -4,6 +4,7 @@ import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
 import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
+import com.flashcards.server.flashcards.core.dto.FlashcardDetailsDTO;
 import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.FlashcardRepositoryPort;
@@ -26,7 +27,7 @@ public class FlashcardManager implements FlashcardManagerPort {
     }
 
     @Override
-    public FlashcardDTO create(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
+    public FlashcardDetailsDTO create(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
         if (tagRepositoryPort.countByUserIdAndIds(userId, createFlashcardDTO.tagIds()) !=
                 createFlashcardDTO.tagIds().size()) {
             throw new ApiException(new ApiError(
@@ -51,12 +52,13 @@ public class FlashcardManager implements FlashcardManagerPort {
 
         flashcardRepository.create(flashcard);
 
-        return new FlashcardDTO(
+        return new FlashcardDetailsDTO(
                 flashcard.getId(),
                 flashcard.getTextQuestion(),
                 flashcard.getUrlQuestion(),
                 flashcard.getAnswer(),
-                createFlashcardDTO.tagIds()
+                createFlashcardDTO.tagIds(),
+                flashcard.getCreatedAt().toString()
         );
     }
 }

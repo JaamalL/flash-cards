@@ -40,7 +40,7 @@ public class FlashcardController {
 
     @Authorize
     @PostMapping
-    public ResponseEntity<FlashcardDTO> create(
+    public ResponseEntity<FlashcardDetailsDTO> create(
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody @Valid CreateFlashcardDTO createFlashcardDTO
     ) {
