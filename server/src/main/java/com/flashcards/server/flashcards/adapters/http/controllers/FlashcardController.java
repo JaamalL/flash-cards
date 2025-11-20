@@ -62,7 +62,7 @@ public class FlashcardController {
     }
 
     @Authorize
-    @GetMapping("{flashcardId")
+    @GetMapping("{flashcardId}")
     public ResponseEntity<FlashcardDetailsDTO> getById(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable UUID flashcardId
