@@ -1,10 +1,7 @@
 package com.flashcards.server.flashcards.adapters.http.controllers;
 
 import com.flashcards.server.common.annotation.Authorize;
-import com.flashcards.server.flashcards.adapters.http.handlers.CreateFlashcardHandler;
-import com.flashcards.server.flashcards.adapters.http.handlers.GetFlashcardByIdHandler;
-import com.flashcards.server.flashcards.adapters.http.handlers.GetFlashcardsByTagIdsHandler;
-import com.flashcards.server.flashcards.adapters.http.handlers.GetFlashcardsByUserIdHandler;
+import com.flashcards.server.flashcards.adapters.http.handlers.*;
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
 import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
 import com.flashcards.server.flashcards.core.dto.FlashcardDetailsDTO;
@@ -25,17 +22,20 @@ public class FlashcardController {
     private final GetFlashcardsByUserIdHandler getFlashcardsByUserIdHandler;
     private final GetFlashcardByIdHandler getFlashcardByIdHandler;
     private final GetFlashcardsByTagIdsHandler getFlashcardsByTagIdsHandler;
+    private final DeleteFlashcardByIdHandler deleteFlashcardByIdHandler;
 
     public FlashcardController(
             CreateFlashcardHandler createFlashcardHandler,
             GetFlashcardsByUserIdHandler getFlashcardsByUserIdHandler,
             GetFlashcardByIdHandler getFlashcardByIdHandler,
-            GetFlashcardsByTagIdsHandler getFlashcardsByTagIdsHandler
+            GetFlashcardsByTagIdsHandler getFlashcardsByTagIdsHandler,
+            DeleteFlashcardByIdHandler deleteFlashcardByIdHandler
     ) {
         this.createFlashcardHandler = createFlashcardHandler;
         this.getFlashcardsByUserIdHandler = getFlashcardsByUserIdHandler;
         this.getFlashcardByIdHandler = getFlashcardByIdHandler;
         this.getFlashcardsByTagIdsHandler = getFlashcardsByTagIdsHandler;
+        this.deleteFlashcardByIdHandler = deleteFlashcardByIdHandler;
     }
 
     @Authorize
@@ -68,5 +68,14 @@ public class FlashcardController {
             @PathVariable UUID flashcardId
     ) {
         return getFlashcardByIdHandler.handle(jwt, flashcardId);
+    }
+
+    @Authorize
+    @DeleteMapping("{flashcardId}")
+    public ResponseEntity<Void> deleteById(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID flashcardId
+    ) {
+        return deleteFlashcardByIdHandler.handle(jwt, flashcardId);
     }
 }
