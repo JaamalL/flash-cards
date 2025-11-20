@@ -61,4 +61,16 @@ public class FlashcardManager implements FlashcardManagerPort {
                 flashcard.getCreatedAt().toString()
         );
     }
+
+    @Override
+    public void deleteById(UUID userId, UUID flashcardId) {
+        if (flashcardRepository.deleteByUserIdAndId(userId, flashcardId) == 0) {
+            throw new ApiException(new ApiError(
+                    HttpStatus.NOT_FOUND,
+                    "NOT_FOUND",
+                    Flashcard.class.getSimpleName() + " with id " + flashcardId +
+                            " not found for user with " + userId + " id"
+            ));
+        }
+    }
 }
