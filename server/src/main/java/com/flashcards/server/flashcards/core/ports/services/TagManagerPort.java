@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface TagManagerPort {
     TagDetailsDTO create(CreateTagDTO createTagDTO, UUID userId);
+    void deleteById(UUID userId, UUID tagId);
 }
