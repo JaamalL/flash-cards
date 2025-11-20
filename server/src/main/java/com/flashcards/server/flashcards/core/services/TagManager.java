@@ -5,9 +5,12 @@ import com.flashcards.server.common.exceptions.ApiException;
 import com.flashcards.server.flashcards.core.dto.CreateTagDTO;
 import com.flashcards.server.flashcards.core.dto.TagDTO;
 import com.flashcards.server.flashcards.core.dto.TagDetailsDTO;
+import com.flashcards.server.flashcards.core.dto.UpdateTagDTO;
+import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.TagRepositoryPort;
 import com.flashcards.server.flashcards.core.ports.services.TagManagerPort;
+import com.flashcards.server.flashcards.core.services.mappers.TagMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -24,21 +27,15 @@ public class TagManager implements TagManagerPort {
 
     @Override
     public TagDetailsDTO create(CreateTagDTO createTagDTO, UUID userId) {
-        Tag entity = new Tag(
+        Tag tag = new Tag(
                 userId,
                 createTagDTO.name(),
                 createTagDTO.description()
         );
 
-        tagRepositoryPort.create(entity);
+        tagRepositoryPort.create(tag);
 
-        return new TagDetailsDTO(
-                entity.getId(),
-                entity.getName(),
-                entity.getDescription(),
-                new ArrayList<>(),
-                entity.getCreatedAt().toString()
-        );
+        return TagMapper.toTagDetailsDTO(tag);
     }
 
     @Override
