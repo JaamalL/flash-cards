@@ -8,6 +8,7 @@ import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.TagRepositoryPort;
 import com.flashcards.server.flashcards.core.ports.services.TagQueryPort;
+import com.flashcards.server.flashcards.core.services.mappers.TagMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +27,7 @@ public class TagQuery implements TagQueryPort {
     public List<TagDTO> getByUserId(UUID userId) {
         List<Tag> tags = tagRepositoryPort.findByUserId(userId);
 
-        return tags.stream().map(tag ->
-            new TagDTO(
-                    tag.getId(),
-                    tag.getName(),
-                    tag.getDescription()
-            )
-        ).toList();
+        return tags.stream().map(TagMapper::toTagDTO).toList();
     }
 
     @Override
@@ -44,12 +39,6 @@ public class TagQuery implements TagQueryPort {
                                 "There is no entities with provided ID"
                 )));
 
-        return new TagDetailsDTO(
-                tag.getId(),
-                tag.getName(),
-                tag.getDescription(),
-                tag.getFlashcards().stream().map(Flashcard::getId).toList(),
-                tag.getCreatedAt().toString()
-        );
+        return TagMapper.toTagDetailsDTO(tag);
     }
 }

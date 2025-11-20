@@ -10,6 +10,7 @@ import com.flashcards.server.flashcards.core.enums.TagMatchMode;
 import com.flashcards.server.flashcards.core.ports.repository.FlashcardRepositoryPort;
 import com.flashcards.server.flashcards.core.ports.repository.TagRepositoryPort;
 import com.flashcards.server.flashcards.core.ports.services.FlashcardQueryPort;
+import com.flashcards.server.flashcards.core.services.mappers.FlashcardMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -33,15 +34,7 @@ public class FlashcardQuery implements FlashcardQueryPort {
     public List<FlashcardDTO> getByUserId(UUID userId) {
         List<Flashcard> flashcards = flashcardRepositoryPort.findByUserId(userId);
 
-        return flashcards.stream().map(flashcard ->
-                new FlashcardDTO(
-                        flashcard.getId(),
-                        flashcard.getTextQuestion(),
-                        flashcard.getUrlQuestion(),
-                        flashcard.getAnswer(),
-                        flashcard.getTags().stream().map(Tag::getId).toList()
-                )
-        ).toList();
+        return flashcards.stream().map(FlashcardMapper::toFlashcardDTO).toList();
     }
 
     @Override
@@ -53,14 +46,7 @@ public class FlashcardQuery implements FlashcardQueryPort {
                         "There is no entities with provided ID"
                 )));
 
-        return new FlashcardDetailsDTO(
-                flashcard.getId(),
-                flashcard.getTextQuestion(),
-                flashcard.getUrlQuestion(),
-                flashcard.getAnswer(),
-                flashcard.getTags().stream().map(Tag::getId).toList(),
-                flashcard.getCreatedAt().toString()
-        );
+        return FlashcardMapper.toFlashcardDetailsDTO(flashcard);
     }
 
     @Override
@@ -78,14 +64,6 @@ public class FlashcardQuery implements FlashcardQueryPort {
             case ANY -> flashcardRepositoryPort.findByUserIdAndAnyTagIds(userId, tagIds);
         };
 
-        return flashcards.stream().map(flashcard ->
-                new FlashcardDTO(
-                        flashcard.getId(),
-                        flashcard.getTextQuestion(),
-                        flashcard.getUrlQuestion(),
-                        flashcard.getAnswer(),
-                        flashcard.getTags().stream().map(Tag::getId).toList()
-                )
-        ).toList();
+        return flashcards.stream().map(FlashcardMapper::toFlashcardDTO).toList();
     }
 }
