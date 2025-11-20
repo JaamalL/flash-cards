@@ -12,4 +12,5 @@ public interface TagRepositoryPort extends IBaseRepository<Tag> {
     Optional<Tag> findByUserIdAndId(UUID userId, UUID tagId);
     List<Tag> findByIds(List<UUID> tagIds);
     long countByUserIdAndIds(UUID userId, List<UUID> tagIds);
+    long deleteByUserIdAndId(UUID userId, UUID tagId);
 }
