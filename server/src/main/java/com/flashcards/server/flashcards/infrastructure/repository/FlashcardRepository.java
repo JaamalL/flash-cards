@@ -1,9 +1,12 @@
 package com.flashcards.server.flashcards.infrastructure.repository;
 
 import com.flashcards.server.common.data.repository.BaseRepository;
+import com.flashcards.server.common.error.ApiError;
+import com.flashcards.server.common.exceptions.ApiException;
 import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.ports.repository.FlashcardRepositoryPort;
 import jakarta.persistence.NoResultException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -66,5 +69,14 @@ public class FlashcardRepository extends BaseRepository<Flashcard> implements Fl
                 .setParameter("tagIds", tagIds)
                 .setParameter("tagCount", tagIds.size())
                 .getResultList();
+    }
+
+    @Override
+    public long deleteByUserIdAndId(UUID userId, UUID flashcardId) {
+        return em.createQuery("DELETE FROM Flashcard f " +
+                "WHERE f.userId = :userId AND f.id = :flashcardId")
+                .setParameter("userId", userId)
+                .setParameter("flashcardId", flashcardId)
+                .executeUpdate();
     }
 }
