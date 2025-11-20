@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface FlashcardManagerPort {
     FlashcardDetailsDTO create(CreateFlashcardDTO createFlashcardDTO, UUID userId);
+    void deleteById(UUID userId, UUID flashcardId);
 }
