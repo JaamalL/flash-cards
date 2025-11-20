@@ -13,4 +13,5 @@ public interface FlashcardRepositoryPort extends IBaseRepository<Flashcard> {
     Optional<Flashcard> findByUserIdAndId(UUID userId, UUID flashcardId);
     List<Flashcard> findByUserIdAndAnyTagIds(UUID userId, List<UUID> tagIds);
     List<Flashcard> findByUserIdAndAllTagIds(UUID userId, List<UUID> tagIds);
+    long deleteByUserIdAndId(UUID userId, UUID flashcardId);
 }
