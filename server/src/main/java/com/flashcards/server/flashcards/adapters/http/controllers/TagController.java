@@ -2,6 +2,7 @@ package com.flashcards.server.flashcards.adapters.http.controllers;
 
 import com.flashcards.server.common.annotation.Authorize;
 import com.flashcards.server.flashcards.adapters.http.handlers.CreateTagHandler;
+import com.flashcards.server.flashcards.adapters.http.handlers.DeleteTagByIdHandler;
 import com.flashcards.server.flashcards.adapters.http.handlers.GetTagByIdHandler;
 import com.flashcards.server.flashcards.adapters.http.handlers.GetTagsByUserIdHandler;
 import com.flashcards.server.flashcards.core.dto.CreateTagDTO;
@@ -22,15 +23,18 @@ public class TagController {
     private final CreateTagHandler createTagHandler;
     private final GetTagsByUserIdHandler getTagsByUserIdHandler;
     private final GetTagByIdHandler getTagByIdHandler;
+    private final DeleteTagByIdHandler deleteTagByIdHandler;
 
     public TagController(
             CreateTagHandler createTagHandler,
             GetTagsByUserIdHandler getTagsByUserIdHandler,
-            GetTagByIdHandler getTagByIdHandler
+            GetTagByIdHandler getTagByIdHandler,
+            DeleteTagByIdHandler deleteTagByIdHandler
     ) {
         this.createTagHandler = createTagHandler;
         this.getTagsByUserIdHandler = getTagsByUserIdHandler;
         this.getTagByIdHandler = getTagByIdHandler;
+        this.deleteTagByIdHandler = deleteTagByIdHandler;
     }
 
     @Authorize
@@ -55,5 +59,14 @@ public class TagController {
             @PathVariable UUID tagId
     ) {
         return getTagByIdHandler.handle(jwt, tagId);
+    }
+
+    @Authorize
+    @DeleteMapping("{tagId}")
+    public ResponseEntity<Void> deleteById(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID tagId
+    ) {
+        return deleteTagByIdHandler.handle(jwt, tagId);
     }
 }
