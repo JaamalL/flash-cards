@@ -10,6 +10,7 @@ import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.FlashcardRepositoryPort;
 import com.flashcards.server.flashcards.core.ports.repository.TagRepositoryPort;
 import com.flashcards.server.flashcards.core.ports.services.FlashcardManagerPort;
+import com.flashcards.server.flashcards.core.services.mappers.FlashcardMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -52,14 +53,7 @@ public class FlashcardManager implements FlashcardManagerPort {
 
         flashcardRepository.create(flashcard);
 
-        return new FlashcardDetailsDTO(
-                flashcard.getId(),
-                flashcard.getTextQuestion(),
-                flashcard.getUrlQuestion(),
-                flashcard.getAnswer(),
-                createFlashcardDTO.tagIds(),
-                flashcard.getCreatedAt().toString()
-        );
+        return FlashcardMapper.toFlashcardDetailsDTO(flashcard);
     }
 
     @Override
