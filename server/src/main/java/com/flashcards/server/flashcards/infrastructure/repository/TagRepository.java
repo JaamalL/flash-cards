@@ -38,12 +38,9 @@ public class TagRepository extends BaseRepository<Tag> implements TagRepositoryP
     }
 
     @Override
-    public List<Tag> findByIds(List<UUID> tagIds) {
-        if (tagIds == null || tagIds.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        return em.createQuery("SELECT t FROM Tag t WHERE t.id IN :tagIds", type)
+    public List<Tag> findByUserIdAndIds(UUID userId, List<UUID> tagIds) {
+        return em.createQuery("SELECT t FROM Tag t WHERE t.userId = :userId AND t.id IN :tagIds", type)
+                .setParameter("userId", userId)
                 .setParameter("tagIds", tagIds)
                 .getResultList();
     }
