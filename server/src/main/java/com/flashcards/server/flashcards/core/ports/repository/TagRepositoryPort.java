@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface TagRepositoryPort extends IBaseRepository<Tag> {
     List<Tag> findByUserId(UUID userId);
     Optional<Tag> findByUserIdAndId(UUID userId, UUID tagId);
-    List<Tag> findByIds(List<UUID> tagIds);
+    List<Tag> findByUserIdAndIds(UUID userId, List<UUID> tagIds);
     long countByUserIdAndIds(UUID userId, List<UUID> tagIds);
     long deleteByUserIdAndId(UUID userId, UUID tagId);
 }
