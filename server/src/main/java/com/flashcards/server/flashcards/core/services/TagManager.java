@@ -49,4 +49,28 @@ public class TagManager implements TagManagerPort {
             ));
         }
     }
+
+    @Override
+    public TagDetailsDTO update(UUID userId, UUID tagId, UpdateTagDTO updateTagDTO) {
+        Tag tag = tagRepositoryPort.findByUserIdAndId(userId, tagId)
+                .orElseThrow(() -> new ApiException(new ApiError(
+                        HttpStatus.BAD_REQUEST,
+                        "INVALID_TAG_ID",
+                        "There is no entities with provided ID"
+                )));
+
+        applyPatch(tag, updateTagDTO);
+
+        return TagMapper.toTagDetailsDTO(tagRepositoryPort.update(tag.getId(), tag));
+    }
+
+    private void applyPatch(Tag entity, UpdateTagDTO updateTagDTO) {
+        if (updateTagDTO.name() != null) {
+            entity.setName(updateTagDTO.name());
+        }
+
+        if (updateTagDTO.description() != null) {
+            entity.setDescription(updateTagDTO.description());
+        }
+    }
 }

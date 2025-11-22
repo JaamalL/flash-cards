@@ -2,9 +2,7 @@ package com.flashcards.server.flashcards.core.services;
 
 import com.flashcards.server.common.error.ApiError;
 import com.flashcards.server.common.exceptions.ApiException;
-import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
-import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
-import com.flashcards.server.flashcards.core.dto.FlashcardDetailsDTO;
+import com.flashcards.server.flashcards.core.dto.*;
 import com.flashcards.server.flashcards.core.entities.Flashcard;
 import com.flashcards.server.flashcards.core.entities.Tag;
 import com.flashcards.server.flashcards.core.ports.repository.FlashcardRepositoryPort;
@@ -19,26 +17,21 @@ import java.util.UUID;
 
 @Service
 public class FlashcardManager implements FlashcardManagerPort {
-    private final FlashcardRepositoryPort flashcardRepository;
+    private final FlashcardRepositoryPort flashcardRepositoryPort;
     private final TagRepositoryPort tagRepositoryPort;
 
-    public FlashcardManager(FlashcardRepositoryPort flashcardRepository, TagRepositoryPort tagRepositoryPort) {
-        this.flashcardRepository = flashcardRepository;
+    public FlashcardManager(FlashcardRepositoryPort flashcardRepositoryPort, TagRepositoryPort tagRepositoryPort) {
+        this.flashcardRepositoryPort = flashcardRepositoryPort;
         this.tagRepositoryPort = tagRepositoryPort;
     }
 
     @Override
     public FlashcardDetailsDTO create(CreateFlashcardDTO createFlashcardDTO, UUID userId) {
-        if (tagRepositoryPort.countByUserIdAndIds(userId, createFlashcardDTO.tagIds()) !=
-                createFlashcardDTO.tagIds().size()) {
-            throw new ApiException(new ApiError(
-                    HttpStatus.BAD_REQUEST,
-                    "INVALID_TAG_ID",
-                    "One or more provided tag IDs are invalid or non-existent"
-            ));
-        }
+        List<Tag> tags = tagRepositoryPort.findByUserIdAndIds(userId, createFlashcardDTO.tagIds());
 
-        List<Tag> tags = tagRepositoryPort.findByIds(createFlashcardDTO.tagIds());
+        if (tags.size() != createFlashcardDTO.tagIds().size()) {
+            throwInvalidTagIdException();
+        }
 
         Flashcard flashcard = new Flashcard(
                 userId,
@@ -51,14 +44,14 @@ public class FlashcardManager implements FlashcardManagerPort {
             flashcard.addTag(tag);
         }
 
-        flashcardRepository.create(flashcard);
+        flashcardRepositoryPort.create(flashcard);
 
         return FlashcardMapper.toFlashcardDetailsDTO(flashcard);
     }
 
     @Override
     public void deleteById(UUID userId, UUID flashcardId) {
-        if (flashcardRepository.deleteByUserIdAndId(userId, flashcardId) == 0) {
+        if (flashcardRepositoryPort.deleteByUserIdAndId(userId, flashcardId) == 0) {
             throw new ApiException(new ApiError(
                     HttpStatus.NOT_FOUND,
                     "NOT_FOUND",
@@ -66,5 +59,65 @@ public class FlashcardManager implements FlashcardManagerPort {
                             " not found for user with " + userId + " id"
             ));
         }
+    }
+
+    @Override
+    public FlashcardDetailsDTO update(UUID userId, UUID flashcardId, UpdateFlashcardDTO updateFlashcardDTO) {
+        Flashcard flashcard = flashcardRepositoryPort.findByUserIdAndId(userId, flashcardId)
+                .orElseThrow(() -> new ApiException(new ApiError(
+                        HttpStatus.BAD_REQUEST,
+                        "INVALID_FLASHCARD_ID",
+                        "There is no entities with provided ID"
+                )));
+
+        applyPatch(userId, flashcard, updateFlashcardDTO);
+
+        return FlashcardMapper.toFlashcardDetailsDTO(flashcardRepositoryPort.update(flashcard.getId(), flashcard));
+    }
+
+    private void applyPatch(UUID userId, Flashcard flashcard, UpdateFlashcardDTO updateFlashcardDTO) {
+        if (updateFlashcardDTO.textQuestion() != null) {
+            flashcard.setTextQuestion(updateFlashcardDTO.textQuestion());
+        }
+
+        if (updateFlashcardDTO.urlQuestion() != null) {
+            flashcard.setUrlQuestion(updateFlashcardDTO.urlQuestion());
+        }
+
+        if (updateFlashcardDTO.answer() != null) {
+            flashcard.setAnswer(updateFlashcardDTO.answer());
+        }
+
+        if (updateFlashcardDTO.removeTagIds() != null) {
+            List<Tag> tags = tagRepositoryPort.findByUserIdAndIds(userId, updateFlashcardDTO.removeTagIds());
+
+            if (tags.size() != updateFlashcardDTO.removeTagIds().size()) {
+                throwInvalidTagIdException();
+            }
+
+            for (Tag tag : tags) {
+                flashcard.removeTag(tag);
+            }
+        }
+
+        if (updateFlashcardDTO.addTagIds() != null) {
+            List<Tag> tags = tagRepositoryPort.findByUserIdAndIds(userId, updateFlashcardDTO.addTagIds());
+
+            if (tags.size() != updateFlashcardDTO.addTagIds().size()) {
+                throwInvalidTagIdException();
+            }
+
+            for (Tag tag : tags) {
+                flashcard.addTag(tag);
+            }
+        }
+    }
+
+    private static void throwInvalidTagIdException() {
+        throw new ApiException(new ApiError(
+                HttpStatus.BAD_REQUEST,
+                "INVALID_TAG_ID",
+                "One or more provided tag IDs are invalid or non-existent"
+        ));
     }
 }
