@@ -5,6 +5,7 @@ import com.flashcards.server.flashcards.adapters.http.handlers.*;
 import com.flashcards.server.flashcards.core.dto.CreateFlashcardDTO;
 import com.flashcards.server.flashcards.core.dto.FlashcardDTO;
 import com.flashcards.server.flashcards.core.dto.FlashcardDetailsDTO;
+import com.flashcards.server.flashcards.core.dto.UpdateFlashcardDTO;
 import com.flashcards.server.flashcards.core.enums.TagMatchMode;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class FlashcardController {
     private final GetFlashcardsByUserIdHandler getFlashcardsByUserIdHandler;
     private final GetFlashcardByIdHandler getFlashcardByIdHandler;
     private final GetFlashcardsByTagIdsHandler getFlashcardsByTagIdsHandler;
+    private final UpdateFlashcardHandler updateFlashcardHandler;
     private final DeleteFlashcardByIdHandler deleteFlashcardByIdHandler;
 
     public FlashcardController(
@@ -29,12 +31,14 @@ public class FlashcardController {
             GetFlashcardsByUserIdHandler getFlashcardsByUserIdHandler,
             GetFlashcardByIdHandler getFlashcardByIdHandler,
             GetFlashcardsByTagIdsHandler getFlashcardsByTagIdsHandler,
+            UpdateFlashcardHandler updateFlashcardHandler,
             DeleteFlashcardByIdHandler deleteFlashcardByIdHandler
     ) {
         this.createFlashcardHandler = createFlashcardHandler;
         this.getFlashcardsByUserIdHandler = getFlashcardsByUserIdHandler;
         this.getFlashcardByIdHandler = getFlashcardByIdHandler;
         this.getFlashcardsByTagIdsHandler = getFlashcardsByTagIdsHandler;
+        this.updateFlashcardHandler = updateFlashcardHandler;
         this.deleteFlashcardByIdHandler = deleteFlashcardByIdHandler;
     }
 
@@ -68,6 +72,16 @@ public class FlashcardController {
             @PathVariable UUID flashcardId
     ) {
         return getFlashcardByIdHandler.handle(jwt, flashcardId);
+    }
+
+    @Authorize
+    @PatchMapping("{flashcardId}")
+    public ResponseEntity<FlashcardDetailsDTO> update(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID flashcardId,
+            @RequestBody UpdateFlashcardDTO updateFlashcardDTO
+    ) {
+        return updateFlashcardHandler.handle(jwt, flashcardId, updateFlashcardDTO);
     }
 
     @Authorize
